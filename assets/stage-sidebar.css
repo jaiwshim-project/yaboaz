@@ -94,3 +94,8 @@
   .approval-list>article,.evidence-list article{grid-template-columns:1fr;gap:10px}
   .inspector{border-left:0;border-top:1px solid var(--line)}
 }
+
+/* 로컬 보안 상태 문구 제거 */
+.sidebar-foot .secure{display:none!important}
+.onboarding-form-actions>span:first-child{display:none!important}
+
