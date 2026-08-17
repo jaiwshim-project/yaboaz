@@ -1,6 +1,6 @@
-﻿export default async function handler(request, response) {
+export default async function handler(request, response) {
   if (request.method !== "POST") return response.status(405).json({ error: "Method Not Allowed" });
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY || req.headers["x-anthropic-api-key"];
   if (!apiKey) return response.status(503).json({ error: "ANTHROPIC_API_KEY가 Vercel에 설정되지 않았습니다." });
   const body = typeof request.body === "string" ? JSON.parse(request.body || "{}") : (request.body || {});
   const filename = String(body.filename || "업로드 자료").slice(0, 240);
