@@ -44,3 +44,5 @@ yarn-error.log*
 *특허*.docx
 기획서_반영현황.md
 로컬_실행_안내.txt
+
+/vercel-static/
