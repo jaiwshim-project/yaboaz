@@ -1,0 +1,18 @@
+﻿(function(){
+  'use strict';
+  var SUPABASE_URL='https://sqfuqnxlafcilsookmqm.supabase.co';
+  var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxZnVxbnhsYWZjaWxzb29rbXF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODI4NTMsImV4cCI6MjA4OTg1ODg1M30.QG99xzmjBAIPMXQaC_vpzwKdlIwp4nwUDkqdy2sNz54';
+  var DEST='https://yaboaz.com/mission-management.html';
+  function api(path,options){options=options||{};options.headers=Object.assign({'Content-Type':'application/json','apikey':SUPABASE_KEY},options.headers||{});return fetch(SUPABASE_URL+path,options).then(function(r){return r.json().then(function(data){if(!r.ok)throw new Error(data.error_description||data.msg||data.message||'Authentication failed');return data;});});}
+  function openModal(){
+    if(document.querySelector('.auth-backdrop'))return;
+    var b=document.createElement('div');b.className='auth-backdrop';
+    b.innerHTML='<section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title"><button class="auth-close" type="button" aria-label="Close">×</button><div class="auth-kicker">YABOAZ K-FDE ACCESS</div><h2 id="auth-title">로그인하고 플랫폼 시작하기</h2><p class="auth-intro">13단계 실행 플랫폼을 시작하려면 로그인하거나 회원가입하세요.</p><div class="auth-tabs"><button type="button" class="active" data-auth-mode="login">로그인</button><button type="button" data-auth-mode="signup">회원가입</button></div><form class="auth-form"><label>이메일<input type="email" name="email" autocomplete="email" required placeholder="you@example.com"></label><label>비밀번호<input type="password" name="password" autocomplete="current-password" required minlength="6" placeholder="6자 이상"></label><label class="auth-name" hidden>이름<input type="text" name="name" autocomplete="name" placeholder="이름"></label><p class="auth-message" role="status"></p><button class="auth-submit" type="submit">로그인</button></form></section>';
+    document.body.appendChild(b); var mode='login',form=b.querySelector('form'),submit=b.querySelector('.auth-submit'),message=b.querySelector('.auth-message'),nameField=b.querySelector('.auth-name');
+    function setMode(next){mode=next;b.querySelectorAll('[data-auth-mode]').forEach(function(x){x.classList.toggle('active',x.dataset.authMode===mode);});nameField.hidden=mode!=='signup';submit.textContent=mode==='signup'?'회원가입':'로그인';message.textContent='';form.reset();}
+    b.querySelectorAll('[data-auth-mode]').forEach(function(x){x.onclick=function(){setMode(x.dataset.authMode);};});
+    b.querySelector('.auth-close').onclick=function(){b.remove();}; b.onclick=function(e){if(e.target===b)b.remove();};
+    form.onsubmit=function(e){e.preventDefault();var data=new FormData(form),email=String(data.get('email')).trim(),password=String(data.get('password'));submit.disabled=true;message.className='auth-message';message.textContent=mode==='signup'?'회원가입 처리 중…':'로그인 확인 중…';var request=mode==='signup'?api('/auth/v1/signup',{method:'POST',body:JSON.stringify({email:email,password:password,data:{full_name:String(data.get('name')||'').trim()}})}):api('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:email,password:password})});request.then(function(result){if(mode==='signup'&&!result.access_token){message.className='auth-message success';message.textContent='가입이 완료되었습니다. 이메일 인증 후 로그인해 주세요.';submit.disabled=false;return;}if(result.access_token){try{sessionStorage.setItem('kfde-auth-session',JSON.stringify(result));}catch(err){}window.location.href=DEST;}}).catch(function(err){message.className='auth-message error';message.textContent=err.message;submit.disabled=false;});};
+  }
+  document.addEventListener('click',function(e){var trigger=e.target.closest('[data-auth-gate]');if(!trigger)return;e.preventDefault();openModal();});
+})();
