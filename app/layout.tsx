@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
     publisher: "YABOAZ K-FDE",
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
     alternates: { canonical: "/" },
-    icons: { icon: "/kfde-symbol.jpg", apple: "/kfde-symbol.jpg" },
+    icons: { icon: "/favicon.svg?v=2", apple: "/kfde-symbol.jpg?v=2" },
     openGraph: { type: "website", locale: "ko_KR", title: "K-FDE 현장 실행 플랫폼", description, url: origin, siteName: "YABOAZ K-FDE", images: [{ url: image, width: 1733, height: 909 }] },
     twitter: { card: "summary_large_image", title: "K-FDE 현장 실행 플랫폼", description, images: [image] },
   };
