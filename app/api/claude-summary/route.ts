@@ -5,7 +5,7 @@ type SummaryRequest = {
 };
 
 export async function POST(request: Request) {
-  const apiKey = process.env.ANTHROPIC_API_KEY || request.headers.get("x-anthropic-api-key");
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return Response.json({ error: "ANTHROPIC_API_KEY가 서버에 설정되지 않았습니다." }, { status: 503 });
   }
