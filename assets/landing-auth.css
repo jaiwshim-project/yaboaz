@@ -130,6 +130,14 @@
 .auth-form input:hover { border-color: #8bc7c8; }
 .auth-form input:focus { border-color: var(--auth-teal); box-shadow: 0 0 0 4px rgba(15, 139, 141, .14); }
 
+.auth-footer { margin: 30px -38px -38px; padding: 20px 38px 18px; border-top: 1px solid rgba(214, 173, 96, .32); background: linear-gradient(135deg, #0b1f33, #123c52); color: #fff; }
+.auth-footer > div:first-child { display: grid; gap: 4px; }
+.auth-footer strong { font-size: 13px; letter-spacing: .02em; }
+.auth-footer span, .auth-footer small { color: #a9c6cf; font-size: 9px; letter-spacing: .12em; }
+.auth-footer-status { display: flex; align-items: center; gap: 7px; margin-top: 11px; }
+.auth-footer-status i { width: 7px; height: 7px; border-radius: 50%; background: #5ee0b2; box-shadow: 0 0 0 4px rgba(94, 224, 178, .12); }
+.auth-footer-status span { color: #d9f7ed; font-size: 9px; font-weight: 900; }
+.auth-footer > small { display: block; margin-top: 13px; padding-top: 11px; border-top: 1px solid rgba(201, 226, 227, .16); }
 .auth-submit {
   margin-top: 4px;
   padding: 14px;
@@ -152,6 +160,7 @@
 
 @media (max-width: 520px) {
   .auth-backdrop { padding: 16px; }
-  .auth-modal { padding: 32px 20px 24px; border-radius: 21px; }
+  .auth-modal { padding: 32px 20px 24px; border-radius: 21px; }.auth-footer { margin-left: -20px; margin-right: -20px; margin-bottom: -24px; padding-left: 20px; padding-right: 20px; }
 }
+
 
