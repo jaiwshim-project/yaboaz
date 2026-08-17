@@ -1,4 +1,4 @@
-(function(){
+﻿(function(){
   'use strict';
   var url='https://sqfuqnxlafcilsookmqm.supabase.co';
   var key='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxZnVxbnhsYWZjaWxzb29rbXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODI4NTMsImV4cCI6MjA4OTg1ODg1M30.QG99xzmjBAIPMXQaC_vpzwKdlIwp4nwUDkqdy2sNz54';
@@ -11,3 +11,4 @@
   fetch(endpoint+'?select=key,value&order=updated_at.desc',{headers:headers()}).then(function(r){return r.ok?r.json():[]}).then(function(rows){(rows||[]).forEach(function(row){if(localStorage.getItem(row.key)===null){nativeSet(row.key,typeof row.value==='string'?row.value:JSON.stringify(row.value));}});}).catch(function(){});
   window.KFDECloud={connected:true,save:function(k,v){push(k,v);},url:url};
 })();
+

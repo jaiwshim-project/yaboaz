@@ -1,7 +1,7 @@
 ﻿(function(){
   'use strict';
   var SUPABASE_URL='https://sqfuqnxlafcilsookmqm.supabase.co';
-  var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxZnVxbnhsYWZjaWxzb29rbXF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODI4NTMsImV4cCI6MjA4OTg1ODg1M30.QG99xzmjBAIPMXQaC_vpzwKdlIwp4nwUDkqdy2sNz54';
+  var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxZnVxbnhsYWZjaWxzb29rbXFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODI4NTMsImV4cCI6MjA4OTg1ODg1M30.QG99xzmjBAIPMXQaC_vpzwKdlIwp4nwUDkqdy2sNz54';
   var DEST='https://yaboaz.com/mission-management.html';
   function api(path,options){options=options||{};options.headers=Object.assign({'Content-Type':'application/json','apikey':SUPABASE_KEY},options.headers||{});return fetch(SUPABASE_URL+path,options).then(function(r){return r.json().then(function(data){if(!r.ok)throw new Error(data.error_description||data.msg||data.message||'Authentication failed');return data;});});}
   function openModal(){
@@ -16,6 +16,7 @@
   }
   document.addEventListener('click',function(e){var trigger=e.target.closest('[data-auth-gate]');if(!trigger||trigger.classList.contains('language-switch'))return;e.preventDefault();openModal();});
 })();
+
 
 
 
