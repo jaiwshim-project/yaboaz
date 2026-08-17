@@ -138,6 +138,16 @@
 .auth-footer-status i { width: 7px; height: 7px; border-radius: 50%; background: #5ee0b2; box-shadow: 0 0 0 4px rgba(94, 224, 178, .12); }
 .auth-footer-status span { color: #d9f7ed; font-size: 9px; font-weight: 900; }
 .auth-footer > small { display: block; margin-top: 13px; padding-top: 11px; border-top: 1px solid rgba(201, 226, 227, .16); }
+.auth-modal.signup-mode { padding-top: 28px; padding-bottom: 24px; }
+.auth-modal.signup-mode .auth-brand { margin-bottom: 14px; }
+.auth-modal.signup-mode h2 { margin-top: 8px; font-size: 25px; }
+.auth-modal.signup-mode .auth-intro { line-height: 1.45; }
+.auth-modal.signup-mode .auth-tabs { margin: 17px 0 13px; }
+.auth-modal.signup-mode .auth-form { gap: 9px; }
+.auth-modal.signup-mode .auth-form input { padding: 10px 12px; }
+.auth-modal.signup-mode .auth-footer { margin-top: 20px; padding-top: 14px; padding-bottom: 13px; }
+.auth-modal.signup-mode .auth-footer-status { margin-top: 8px; }
+.auth-modal.signup-mode .auth-footer > small { margin-top: 9px; padding-top: 8px; }
 .auth-resend { padding: 0; border: 0; background: transparent; color: var(--auth-teal-dark); font-size: 12px; font-weight: 850; text-align: left; text-decoration: underline; cursor: pointer; }
 .auth-resend:hover { color: var(--auth-navy); }
 .auth-resend:disabled { opacity: .6; cursor: wait; }
@@ -165,6 +175,8 @@
   .auth-backdrop { padding: 16px; }
   .auth-modal { padding: 32px 20px 24px; border-radius: 21px; }.auth-footer { margin-left: -20px; margin-right: -20px; margin-bottom: -24px; padding-left: 20px; padding-right: 20px; }
 }
+
+
 
 
 
