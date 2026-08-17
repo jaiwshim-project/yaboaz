@@ -30,3 +30,9 @@
 .landing .stage-node strong,.landing .framework-card h3,.landing .detail-card h3{color:#17313d}
 .landing .stage-node small,.landing .framework-card p,.landing .detail-card p{color:#40586e}
 .landing .book-cover small{opacity:1;text-shadow:0 1px 3px rgba(0,0,0,.75)}
+
+/* Centered language switch on the Korean landing page. */
+.landing-nav{position:relative}
+.landing-nav>.language-switch{position:absolute;left:50%;transform:translateX(-50%);padding:9px 15px;border:1px solid #147fa4;border-radius:9px;background:#fff;color:#147fa4;font-size:13px;font-weight:800;text-decoration:none}
+.landing-nav>.language-switch:hover{transform:translateX(-50%) translateY(-2px);background:#eef9fb}
+@media(max-width:520px){.landing-nav{align-items:flex-start;gap:12px}.landing-nav>.language-switch{top:8px}.landing-nav>a:last-child{margin-top:48px}}
