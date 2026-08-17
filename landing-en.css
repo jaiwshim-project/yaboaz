@@ -30,3 +30,5 @@
 .landing-nav-actions .language-switch{position:absolute;left:50%;transform:translateX(-50%);background:#147fa4;color:#fff}
 .landing-nav-actions .language-switch:hover{transform:translateX(-50%) translateY(-2px)}
 @media(max-width:700px){.landing-nav{align-items:flex-start;gap:12px}.landing-nav-actions{justify-content:flex-end;padding-top:48px;width:100%}.landing-nav-actions .language-switch{top:10px}.landing-nav-actions a:last-child{margin-left:auto}}
+
+.landing-nav-actions .language-switch{z-index:1000;pointer-events:auto;cursor:pointer}
