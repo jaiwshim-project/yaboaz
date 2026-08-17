@@ -1,0 +1,61 @@
+@import url("readability.css");
+.sidebar{height:100vh;position:fixed;inset:0 auto 0 0}
+.sidebar nav.stage-nav{overflow-y:auto;min-height:0;padding:8px 10px 18px;scrollbar-width:thin}
+.stage-nav .nav-section{margin:0 0 8px}
+.stage-nav .nav-section-title{width:100%;display:flex;align-items:center;gap:8px;padding:9px 8px;border:0;background:transparent;color:#8fa2ba;font-size:10px;font-weight:800;letter-spacing:.1em;text-align:left;cursor:pointer}
+.stage-nav .nav-section-title b{flex:1;color:inherit;font-size:10px}
+.stage-nav .nav-section-title .phase-count{border:1px solid rgba(148,163,184,.22);border-radius:999px;padding:2px 6px;color:#c7d2e1;font-size:9px}
+.stage-nav .nav-section-title .chevron{font-size:12px;transition:transform .18s ease}
+.stage-nav .nav-section.collapsed .nav-section-title .chevron{transform:rotate(-90deg)}
+.stage-nav .nav-section.collapsed .nav-section-body{display:none}
+.stage-nav .phase-caption{display:block;padding:0 8px 6px;color:#f59e0b;font-size:10px;font-weight:750;line-height:1.35}
+.stage-nav .nav-link{position:relative;min-height:38px;margin:2px 0;padding:7px 8px;border-radius:9px;display:flex;align-items:center;gap:8px}
+.stage-nav .nav-link .stage-index{width:24px;height:24px;flex:0 0 24px;border:1px solid rgba(148,163,184,.25);border-radius:7px;display:grid;place-items:center;color:#93a4b8;font-size:10px;font-style:normal;font-weight:800}
+.stage-nav .nav-link .stage-copy{min-width:0;display:flex;flex-direction:column;gap:1px}
+.stage-nav .nav-link .stage-copy strong{overflow:hidden;color:#dbe5f1;font-size:11.5px;font-weight:700;text-overflow:ellipsis;white-space:nowrap}
+.stage-nav .nav-link .stage-copy small{color:#71839a;font-size:9px}
+.stage-nav .nav-link .stage-copy .frame-badge{display:block;color:#f6a35b;font-size:10px;font-style:normal;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stage-nav .nav-link.current-stage:not(.active) .stage-index{border-color:rgba(148,163,184,.25);color:#93a4b8}
+.stage-nav .nav-link.current-stage .stage-copy small{color:#fbbf24}
+.stage-nav .nav-link.active{background:linear-gradient(90deg,rgba(245,158,11,.2),rgba(245,158,11,.06));box-shadow:inset 2px 0 #f59e0b}
+.stage-nav .nav-link.active .stage-index{border-color:#f59e0b;background:#f59e0b;color:#172033}
+.stage-nav .nav-link.complete .stage-index{border-color:#34d399;background:rgba(52,211,153,.12);color:#6ee7b7}
+.stage-nav .nav-link.active:not(.current){background:rgba(59,130,246,.12)}
+.stage-nav .nav-link.support .stage-index{border:0;font-size:14px}
+.stage-nav .nav-progress{margin:4px 8px 12px;padding:10px;border:1px solid rgba(148,163,184,.16);border-radius:10px;background:rgba(15,23,42,.45)}
+.stage-nav .nav-progress div{display:flex;justify-content:space-between;color:#93a4b8;font-size:10px}
+.stage-nav .nav-progress b{color:#f59e0b;font-size:11px}
+.stage-nav .nav-progress i{display:block;height:4px;margin-top:7px;border-radius:999px;background:rgba(148,163,184,.15);overflow:hidden}
+.stage-nav .nav-progress i span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#f59e0b,#fb7185)}
+@media(max-width:760px){.sidebar{position:fixed;inset:auto 10px 10px;width:auto;height:60px;padding:7px}.sidebar nav.stage-nav{display:flex;flex-direction:row;gap:3px;max-height:none;padding:0;overflow-x:auto;overflow-y:hidden}.stage-nav .nav-progress,.stage-nav .nav-section-title,.stage-nav .phase-caption{display:none}.stage-nav .nav-section{display:contents}.stage-nav .nav-section-body,.stage-nav .nav-section.collapsed .nav-section-body{display:flex}.stage-nav .nav-link{width:49px;height:46px;flex:0 0 49px;justify-content:center;padding:5px;margin:0}.stage-nav .nav-link .stage-index{width:26px;height:26px;flex-basis:26px}.stage-nav .nav-link .stage-copy{display:none}}
+.sidebar{width:310px!important}.workspace{width:calc(100% - 310px)!important;margin-left:310px!important}.stage-nav .nav-link .stage-copy strong{overflow:visible;text-overflow:clip;white-space:normal;line-height:1.35}.stage-nav .nav-link .stage-copy .frame-badge{overflow:visible;text-overflow:clip;white-space:normal}
+@media(max-width:760px){.sidebar{width:auto!important}.workspace{width:100%!important;margin-left:0!important}}
+
+/* 공통 메뉴 가독성: 기존 10pt 이하 글자에 정확히 2pt를 더한다. */
+.sidebar .brand strong{font-size:calc(12px + 2pt)!important}
+.sidebar .brand small{font-size:calc(8px + 2pt)}
+.sidebar .project-switcher>small{font-size:calc(9px + 2pt)}
+.sidebar .project-switcher>a{font-size:calc(12px + 2pt)}
+.stage-nav .nav-section-title,.stage-nav .nav-section-title b{font-size:calc(10px + 2pt)}
+.stage-nav .nav-section-title .phase-count{font-size:calc(9px + 2pt)}
+.stage-nav .phase-caption{font-size:calc(10px + 2pt)}
+.stage-nav .nav-link .stage-index{font-size:calc(10px + 2pt)}
+.stage-nav .nav-link .stage-copy strong{font-size:calc(11.5px + 2pt)}
+.stage-nav .nav-link .stage-copy small{font-size:calc(9px + 2pt)}
+.stage-nav .nav-progress div{font-size:calc(10px + 2pt)}
+.stage-nav .nav-progress b{font-size:calc(11px + 2pt)}
+.sidebar .secure strong{font-size:calc(10px + 2pt)}
+.sidebar .secure small{font-size:calc(8px + 2pt)}
+.sidebar .profile strong{font-size:calc(10px + 2pt)}
+.sidebar .profile small{font-size:calc(8px + 2pt)}
+.premium-footer .footer-nav b{font-size:calc(7px + 2pt)}
+.premium-footer .footer-nav a{font-size:calc(9px + 2pt)}
+.premium-footer .footer-principles span{font-size:calc(7px + 2pt)}
+.premium-footer .footer-status>small{font-size:calc(7px + 2pt)}
+.premium-footer .footer-status strong{font-size:calc(9px + 2pt)}
+.premium-footer .footer-status div small{font-size:calc(7px + 2pt)}
+.premium-footer .footer-status dl{font-size:calc(7px + 2pt)}
+.premium-footer .footer-bottom{font-size:calc(7px + 2pt)}
+
+/* 각 페이지 본문에서 계산된 글자 크기가 10pt 이하인 요소만 런타임에 +2pt 보정한다. */
+.k-fde-content-text-plus-2pt:not(.k-fde-readable-text){font-size:calc(var(--k-fde-content-font-base) + 2pt)!important}

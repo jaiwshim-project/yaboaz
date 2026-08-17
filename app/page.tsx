@@ -6,7 +6,6 @@ type View = "command" | "projects" | "field" | "questions" | "ontology" | "appro
 type Suggestion = { id: number; kind: string; title: string; reason: string; confidence: number; risk: string; status: "pending" | "accepted" | "rejected" };
 
 const nav: { id: View; label: string; icon: string; badge?: string }[] = [
-  { id: "command", label: "미션 컨트롤", icon: "⌁" },
   { id: "projects", label: "프로젝트", icon: "▦", badge: "4" },
   { id: "field", label: "현장 기록", icon: "◎", badge: "12" },
   { id: "questions", label: "질문 플래너", icon: "?", badge: "5" },
@@ -62,7 +61,7 @@ const ontologyNodes = [
 ];
 
 export default function Home() {
-  const [view, setView] = useState<View>("command");
+  const [view, setView] = useState<View>("projects");
   const [stage, setStage] = useState(5);
   const [project, setProject] = useState(projects[0]);
   const [evidence, setEvidence] = useState(evidenceSeed);
@@ -76,7 +75,7 @@ export default function Home() {
   ]);
 
   const pending = suggestions.filter((item) => item.status === "pending").length;
-  const title = nav.find((item) => item.id === view)?.label ?? "미션 컨트롤";
+  const title = nav.find((item) => item.id === view)?.label ?? "프로젝트";
   const progress = Math.round(((stage + 1) / stages.length) * 100);
 
   function notify(message: string) {
@@ -94,7 +93,7 @@ export default function Home() {
   return (
     <main className="app-shell">
       <aside className="sidebar">
-        <div className="brand"><span className="brand-mark">K</span><span><strong>K-FDE</strong><small>FIELD OPERATING SYSTEM</small></span></div>
+        <div className="brand"><span className="brand-mark"><img src="/kfde-symbol.jpg" alt="K-FDE 심볼" /></span><span><strong style={{ fontSize: 12, letterSpacing: "-.01em", whiteSpace: "nowrap" }}>K-FDE 현장 실행.운영 플랫폼</strong><small>FIELD OPERATING SYSTEM</small></span></div>
         <div className="project-switcher">
           <small>ACTIVE PROJECT</small>
           <button onClick={() => setView("projects")}><span className="project-dot" />{project.name}<b>⌄</b></button>
@@ -112,7 +111,7 @@ export default function Home() {
         <header className="topbar"><div><span className="eyebrow">K-FDE / {project.customer}</span><h1>{title}</h1></div><div className="header-actions"><button className="icon-button" aria-label="검색">⌕</button><button className="icon-button alert" aria-label="알림">♢<em>3</em></button><button className="primary" onClick={() => setModal(true)}>＋ 현장 기록</button></div></header>
 
         {view === "command" && <CommandCenter stage={stage} setStage={setStage} progress={progress} suggestions={suggestions} decide={decide} setView={setView} />}
-        {view === "projects" && <Projects current={project.name} onSelect={(next) => { setProject(next); setStage(next.stage); setView("command"); notify(`${next.name} 프로젝트로 전환했습니다.`); }} />}
+        {view === "projects" && <Projects current={project.name} onSelect={(next) => { setProject(next); setStage(next.stage); setView("projects"); notify(`${next.name} 프로젝트로 전환했습니다.`); }} />}
         {view === "field" && <FieldRecords evidence={evidence} onAdd={() => setModal(true)} />}
         {view === "questions" && <Questions notify={notify} />}
         {view === "ontology" && <Ontology selected={selected} selectedNode={selectedNode} setSelectedNode={setSelectedNode} />}
@@ -157,7 +156,7 @@ function Projects({ current, onSelect }: { current: string; onSelect: (p: typeof
 
 function FieldRecords({ evidence, onAdd }: { evidence: typeof evidenceSeed; onAdd: () => void }) { return <div className="page-content"><div className="page-intro"><div><span className="eyebrow">FIELD EVIDENCE</span><h2>현장 기록</h2><p>관찰, 발언, 로그를 출처와 신뢰도가 있는 증거로 전환합니다.</p></div><button className="primary" onClick={onAdd}>＋ 기록 추가</button></div><div className="filter-row"><button className="active">전체 {evidence.length}</button><button>관찰</button><button>인터뷰</button><button>문서·로그</button><label>⌕ <input aria-label="현장 기록 검색" placeholder="기록 검색" /></label></div><div className="evidence-list">{evidence.map((item, i) => <article key={`${item.title}-${i}`}><span className={`evidence-icon t${i % 4}`}>{item.type.slice(0, 1)}</span><div className="evidence-main"><div><em>{item.type}</em><span className={`tag ${item.tag}`}>{item.tag}</span></div><h3>{item.title}</h3><p>{item.source} · {item.time}</p></div><div className="confidence"><small>신뢰도</small><strong>{item.confidence}%</strong><div><i style={{ width: `${item.confidence}%` }} /></div></div><button className="more">•••</button></article>)}</div></div>; }
 
-function Questions({ notify }: { notify: (s: string) => void }) { const [done, setDone] = useState<number[]>([]); return <div className="page-content"><div className="page-intro"><div><span className="eyebrow">NEXT BEST QUESTION</span><h2>질문 플래너</h2><p>불확실성을 가장 크게 줄이는 질문부터 현장 인터뷰를 설계합니다.</p></div><button className="primary" onClick={() => notify("현재 온톨로지를 바탕으로 질문을 다시 계산했습니다.")}>✦ 질문 재생성</button></div><div className="question-layout"><section className="panel question-list"><div className="panel-title"><div><h3>추천 질문</h3><small>정보가치 · 목표영향 · 답변가능성 순</small></div><span className="model-pill">4개 후보</span></div>{questionSeed.map((q, i) => <article className={done.includes(i) ? "completed" : ""} key={q.title}><div className="rank">{String(i + 1).padStart(2, "0")}</div><div><div className="question-meta"><span>{q.target}</span><em>정보가치 {q.value}</em></div><h4>{q.title}</h4><p>목적 · {q.purpose} · 민감도 {q.sensitivity}</p></div><button onClick={() => { setDone([...done, i]); notify("질문을 인터뷰 계획에 추가했습니다."); }}>{done.includes(i) ? "추가됨 ✓" : "계획에 추가"}</button></article>)}</section><aside className="panel interview-plan"><span className="eyebrow">TODAY</span><h3>인터뷰 런시트</h3><div className="run-time"><strong>42</strong><span>분 예상<br /><small>질문 7개</small></span></div><div className="run-bar"><i style={{ width: "62%" }} /></div><ul><li><span>10:00</span>현장 작업자 · A구역</li><li><span>13:30</span>안전관리자 · 상황실</li><li><span>16:00</span>IT 관리자 · 원격</li></ul><button>런시트 시작 →</button></aside></div></div>; }
+function Questions({ notify }: { notify: (s: string) => void }) { const [done, setDone] = useState<number[]>([]); return <div className="page-content"><div className="page-intro"><div><span className="eyebrow">NEXT BEST QUESTION</span><h2>질문 플래너</h2><p>불확실성을 가장 크게 줄이는 질문부터 현장 인터뷰를 설계합니다.</p></div><button className="primary" onClick={() => notify("현재 온톨로지를 바탕으로 질문을 다시 계산했습니다.")}>✦ 질문 재생성</button></div><div className="question-layout"><section className="panel question-list"><div className="panel-title"><div><h3>추천 질문</h3><small>정보가치 · 목표영향 · 답변가능성 순</small></div><span className="model-pill">4개 후보</span></div>{questionSeed.map((q, i) => <article className={done.includes(i) ? "completed" : ""} key={q.title}><div className="rank">{String(i + 1).padStart(2, "0")}</div><div><div className="question-meta"><span>{q.target}</span><em>정보가치 {q.value}</em></div><h4>{q.title}</h4><p>목적 · {q.purpose} · 민감도 {q.sensitivity}</p></div><button onClick={() => { setDone([...done, i]); notify("질문을 인터뷰 계획에 추가했습니다."); }}>{done.includes(i) ? "추가됨 ✓" : "계획에 추가"}</button></article>)}</section><aside className="panel interview-plan"><span className="eyebrow">TODAY</span><h3>인터뷰 실행계획표(런시트)</h3><div className="run-time"><strong>42</strong><span>분 예상<br /><small>질문 7개</small></span></div><div className="run-bar"><i style={{ width: "62%" }} /></div><ul><li><span>10:00</span>현장 작업자 · A구역</li><li><span>13:30</span>안전관리자 · 상황실</li><li><span>16:00</span>IT 관리자 · 원격</li></ul><button>인터뷰 실행계획표 시작 →</button></aside></div></div>; }
 
 function Ontology({ selected, selectedNode, setSelectedNode }: { selected: typeof ontologyNodes[number]; selectedNode: string; setSelectedNode: (s: string) => void }) { return <div className="ontology-page"><div className="page-intro compact"><div><span className="eyebrow">ONTOLOGY 7</span><h2>온톨로지 스튜디오</h2></div><div className="studio-tools"><button>−</button><button>100%</button><button>＋</button><button className="primary">＋ 요소 추가</button></div></div><div className="studio"><div className="graph-canvas"><div className="graph-grid" /><div className="graph-legend"><span><i className="object" />객체</span><span><i className="state" />상태</span><span><i className="event" />이벤트</span><span><i className="rule" />규칙</span><span><i className="action" />행동</span></div><div className="edge e1" /><div className="edge e2" /><div className="edge e3" /><div className="edge e4" /><div className="edge e5" />{ontologyNodes.map((node) => <button key={node.id} onClick={() => setSelectedNode(node.id)} className={`graph-node ${node.type} ${selectedNode === node.id ? "selected" : ""}`} style={{ left: `${node.x}%`, top: `${node.y}%` }}><small>{node.type}</small><strong>{node.label}</strong></button>)}</div><aside className="inspector"><div className="inspector-head"><div><small>{selected.type.toUpperCase()}</small><h3>{selected.label}</h3></div><button>×</button></div><div className="inspector-field">상태<span className="status-live">● 활성</span></div><div className="inspector-field">신뢰도<strong>88%</strong><div className="mini-bar"><i style={{ width: "88%" }} /></div></div><div className="inspector-field">연결된 증거<strong>7건</strong></div><div className="inspector-field">최근 변경<small>오늘 09:42 · 김FDE</small></div><div className="inspector-section"><span>관계</span><p><b>발생 위치</b> 현장 A구역</p><p><b>트리거</b> 위험 알림</p><p><b>수행 주체</b> 현장 FDE</p></div><div className="conflict-box"><span>!</span><div><strong>규칙 충돌 감지</strong><p>등급 판정 조건 2건을 검토하세요.</p></div></div><button className="wide-button">세부정보 열기 →</button></aside></div></div>; }
 

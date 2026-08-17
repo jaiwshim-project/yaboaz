@@ -1,0 +1,70 @@
+(function(){
+  'use strict';
+  if(document.body.dataset.page!=='questions')return;
+  var STORE='k-fde-question-material-v1',BASE='k-fde-mvp-v2';
+  var groups={ecosystem:'생태계 8요소',primitive:'플랫폼 원시요소 8개',ontology:'온톨로지 7요소',operation:'현장 실행·검증'};
+  var rows=[
+    ['eco-participant','ecosystem','참여자','현장의 판단·승인·실행에 실제로 관여하는 사람과 조직은 누구이며, 각자의 책임과 성공 기준은 무엇입니까?','공식 조직도와 실제 의사결정자를 구분한다.','역할·책임·영향력·이해관계자 지도','조직도, RACI, 교대조 명단','현장 책임자','Phase1','필수',6],
+    ['eco-problem','ecosystem','문제·목표','지금 가장 먼저 줄여야 할 손실·지연·위험은 무엇이며, 발생 빈도와 영향은 어느 정도입니까?','증상이 아닌 측정 가능한 핵심 문제를 합의한다.','문제 문장, 기준선, 우선순위','사고 이력, 리드타임, 비용 자료','업무 오너','Phase1','필수',7],
+    ['eco-resource','ecosystem','자원·객체','문제를 해결하려면 어떤 사람·설비·문서·업무 건을 고유하게 식별하고 추적해야 합니까?','핵심 객체와 식별키를 찾는다.','객체 후보, 식별자, 생명주기','자산대장, 문서번호, 업무 목록','현장 실무자','Phase1','필수',6],
+    ['eco-data','ecosystem','데이터','판단에 필요한 정보는 어디에서 생성되며, 누가 입력하고 얼마나 자주 갱신합니까?','데이터의 출처·신선도·책임자를 확인한다.','데이터 목록, 소유자, 갱신주기','화면 캡처, 원장, API 목록','데이터 담당자','Phase1','필수',7],
+    ['eco-relation','ecosystem','관계','사람·설비·사건·문서는 어떤 관계로 연결되며, 관계가 바뀌면 업무에 어떤 영향이 생깁니까?','단일 목록에 숨은 의존관계를 드러낸다.','관계 지도, 영향 경로','업무 흐름도, 참조키, 배치도','업무 설계자','Phase1','권장',6],
+    ['eco-rule','ecosystem','규칙','정상·주의·위험을 나누거나 승인·에스컬레이션을 결정하는 실제 기준은 무엇입니까?','명시 규칙과 암묵적 판단을 수집한다.','조건·임계치·예외·규칙 오너','규정, 체크리스트, 과거 판정 사례','승인자','Phase1','필수',7],
+    ['eco-action','ecosystem','상호작용·행동','신호를 발견한 뒤 누가 누구에게 무엇을 요청하고, 어떤 순서로 조치합니까?','정보가 행동으로 전환되는 경로를 파악한다.','행동 흐름, 인계점, 병목','메신저 기록, 작업지시서, SOP','현장 실무자','Phase1','필수',7],
+    ['eco-value','ecosystem','가치·성과','문제가 해결됐다고 판단할 수 있는 결과는 무엇이며, 참여자별로 얻는 가치는 어떻게 다릅니까?','성과의 수혜자와 측정 기준을 연결한다.','KPI 후보, 목표값, 가치 교환표','SLA, 성과표, 고객 요구사항','프로젝트 스폰서','Phase1','필수',6],
+    ['pri-ontology','primitive','온톨로지','현장의 용어가 부서마다 다르게 쓰이는 사례는 무엇이며, 공통 개념 사전은 누가 승인해야 합니까?','재사용 가능한 도메인 언어를 만든다.','용어·동의어·금칙어·오너','용어집, 화면 라벨, 규정','도메인 전문가','Phase2','필수',6],
+    ['pri-object','primitive','객체 모델','핵심 대상별 필수 속성·관계·상태와 고유 식별자는 무엇입니까?','데이터와 업무를 같은 객체 모델로 묶는다.','객체 스키마와 상태 전이 초안','샘플 레코드, ERD, 자산대장','데이터 담당자','Phase2','필수',7],
+    ['pri-permission','primitive','권한 시스템','역할별로 무엇을 조회·수정·승인·실행할 수 있어야 하며, 절대 허용하면 안 되는 행동은 무엇입니까?','권한을 화면이 아닌 행동 단위로 정의한다.','역할-객체-행동 권한표','권한 신청서, 감사 사례','보안·승인 담당자','Phase2','필수',7],
+    ['pri-workflow','primitive','워크플로 엔진','업무의 시작·대기·승인·완료 상태와 분기 조건, 시간 초과, 예외 복구 절차는 무엇입니까?','정상 흐름과 예외 흐름을 함께 모델링한다.','상태도, 조건, 예외·재처리 규칙','SOP, 티켓 이력, 승인 기록','프로세스 오너','Phase2','필수',8],
+    ['pri-lineage','primitive','출처 추적','데이터·판단·변경마다 원본, 생성자, 시각, 버전을 어디까지 추적해야 합니까?','AI 판단의 근거와 감사 가능성을 확보한다.','출처·변경 이력·보존 정책','로그, 버전 이력, 증빙 문서','감사·품질 담당자','Phase2','필수',6],
+    ['pri-action','primitive','액션 템플릿','반복되는 조치·명령·알림을 어떤 입력과 승인 조건을 가진 표준 템플릿으로 만들 수 있습니까?','반복 실행을 안전하게 자동화한다.','액션명, 입력, 승인, 롤백','작업지시서, 메시지 양식','운영 책임자','Phase2','권장',7],
+    ['pri-kpi','primitive','KPI 모델','각 지표의 정확한 정의·분모·집계 주기·데이터 출처·책임자는 누구입니까?','서로 다른 숫자 해석을 제거한다.','KPI 사전과 산식','대시보드, 월간 보고서','성과 담당자','Phase2','필수',6],
+    ['pri-extension','primitive','확장 템플릿','다른 현장에도 그대로 유지할 공통 구조와 고객별로 바꿔야 할 설정은 무엇입니까?','코드 복제 없이 확장 가능한 경계를 정한다.','공통·가변 항목, 설정 포인트','타 현장 사례, 계약별 요구사항','플랫폼 오너','Phase2','권장',6],
+    ['ont-object','ontology','객체','AI가 계속 추적해야 할 핵심 객체는 무엇이며, 객체라고 부를 최소 조건을 충족합니까?','행동·상태·관계가 있는 핵심 대상을 선별한다.','핵심 객체 목록과 제외 근거','업무 명사 목록, 샘플 데이터','도메인 전문가','Phase2','필수',6],
+    ['ont-attribute','ontology','속성','각 객체를 판단에 충분히 설명하는 속성은 무엇이며, 단위·허용값·결측 처리 기준은 무엇입니까?','속성을 분석 가능한 품질로 정의한다.','속성 사전, 단위, 품질 규칙','데이터 사전, 입력 화면','데이터 담당자','Phase2','필수',7],
+    ['ont-relation','ontology','관계','객체 사이 관계의 방향·카디널리티·유효기간은 어떻게 정의해야 합니까?','영향과 책임의 연결 구조를 만든다.','관계 유형과 제약 조건','ERD, 조직도, 배치도','업무 설계자','Phase2','필수',6],
+    ['ont-state','ontology','상태','객체의 정상·주의·위험·종료 상태는 무엇이며, 상태 전환은 어떤 신호로 확정됩니까?','현재 조건을 기계가 판별하게 한다.','상태 목록과 전이 조건','상태 코드, 경보 이력','현장 책임자','Phase2','필수',7],
+    ['ont-event','ontology','이벤트','상태 변화를 일으키는 사건은 무엇이며, 발생 시각·위치·주체를 어떻게 포착합니까?','동적 대응의 시작 신호를 정의한다.','이벤트 유형, 트리거, 페이로드','센서 로그, 접수 기록','시스템 운영자','Phase2','필수',7],
+    ['ont-rule','ontology','규칙','어떤 조건 조합에서 어떤 결론을 내려야 하며, 충돌·예외·우선순위는 어떻게 처리합니까?','판단 로직을 검증 가능한 규칙으로 만든다.','IF-THEN 규칙, 우선순위, 예외','판정 사례, 규정, 전문가 메모','도메인 전문가','Phase2','필수',8],
+    ['ont-action','ontology','행동','판단 결과에 따라 시스템·사람·외부 기관이 실행할 행동과 승인·취소·롤백 조건은 무엇입니까?','AI 판단을 안전한 실행으로 연결한다.','행동 카탈로그, 승인·롤백 조건','SOP, API 명세, 연락망','운영 책임자','Phase2','필수',8],
+    ['ops-static','operation','정적 맥락','평상시 객체의 위치·담당자·설비 제원·주변 위험요소를 어떤 기준 정보로 미리 연결해야 합니까?','사건 전 디지털 맥락을 완성한다.','정적 객체 맵과 기준정보 결손','도면, 위치도, 설비대장','시설 담당자','Phase3','필수',6],
+    ['ops-dynamic','operation','동적 대응','이벤트가 발생하면 어떤 객체의 상태가 바뀌고, 어떤 규칙이 어떤 행동을 촉발해야 합니까?','이벤트-상태-규칙-행동의 폐루프를 검증한다.','동적 대응 시나리오와 예상 결과','사고 타임라인, 알림 로그','상황실 책임자','Phase3','필수',8],
+    ['ops-identity','operation','객체 판별','후보 객체가 정체성·행동·관계·상태 변화·생명주기 중 어떤 조건을 충족하며, 단순 속성과 구분되는 근거는 무엇입니까?','과도하거나 부족한 객체 모델링을 방지한다.','객체/속성 판별표','샘플 데이터, 도메인 사례','온톨로지 설계자','Phase3','권장',6],
+    ['ops-value','operation','가치 교환','각 참여자는 플랫폼에 무엇을 제공하고 무엇을 받으며, 어느 지점에서 교환이 막히거나 왜곡됩니까?','생태계 지속성을 가치 흐름으로 점검한다.','Give/Get 네트워크와 병목','계약, 서비스 흐름, 인터뷰 기록','사업 책임자','Phase3','권장',7],
+    ['ops-control','operation','통제 규칙','동일 사건에서 다중 규칙이 연쇄 실행될 때 중복 알림·충돌 명령·책임 공백을 어떻게 방지합니까?','자동화의 충돌과 통제 위험을 발견한다.','규칙 우선순위와 억제 조건','과거 오경보, 충돌 사례','운영·안전 책임자','Phase3','필수',7],
+    ['ops-loop','operation','현장 검증 루프','수집→감지→분석→실행→가치→학습의 각 단계에서 성공·실패를 어떤 증거로 판정하고 다음 반복에 무엇을 반영합니까?','MVP를 학습 가능한 폐루프로 운영한다.','검증 지표, 회고 항목, 개선 백로그','테스트 결과, 사용자 피드백','파일럿 책임자','Phase3','필수',8]
+  ];
+  var questions=rows.map(function(r){return{id:r[0],group:r[1],topic:r[2],text:r[3],intent:r[4],result:r[5],evidence:r[6],target:r[7],phase:r[8],priority:r[9],minutes:r[10]};});
+  function esc(v){return String(v==null?'':v).replace(/[&<>'"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];});}
+  function parse(k,f){try{return JSON.parse(localStorage.getItem(k)||'')||f;}catch(_){return f;}}
+  function currentProject(){var b=parse(BASE,{});return b.projectId||localStorage.getItem('k-fde-current-project')||'firenavi';}
+  function load(){var all=parse(STORE,{projects:{}}),id=currentProject();all.projects=all.projects||{};if(!all.projects[id])all.projects[id]={selected:[],interviewee:'',date:'',mode:'현장 대면'};return{all:all,id:id,plan:all.projects[id]};}
+  var state=load(),filter={search:'',group:'all',target:'all',phase:'all'};
+  function save(){state.all.projects[state.id]=state.plan;localStorage.setItem(STORE,JSON.stringify(state.all));var b=parse(BASE,{});b.plannedQuestions=state.plan.selected.slice();b.questionPlanUpdatedAt=new Date().toISOString();localStorage.setItem(BASE,JSON.stringify(b));}
+  function selected(){return state.plan.selected.map(function(id){return questions.find(function(q){return q.id===id;});}).filter(Boolean);}
+  function visible(){var s=filter.search.trim().toLowerCase();return questions.filter(function(q){return(filter.group==='all'||q.group===filter.group)&&(filter.target==='all'||q.target===filter.target)&&(filter.phase==='all'||q.phase===filter.phase)&&(!s||[q.text,q.topic,q.intent,q.result,q.evidence,q.target].join(' ').toLowerCase().indexOf(s)>-1);});}
+  function opts(values,value,label){return'<option value="all">'+label+'</option>'+values.map(function(v){return'<option value="'+esc(v)+'"'+(v===value?' selected':'')+'>'+esc(v)+'</option>';}).join('');}
+  function card(q,i){var on=state.plan.selected.indexOf(q.id)>-1;return'<article class="qm-question'+(on?' selected':'')+'"><div class="qm-number">'+String(i+1).padStart(2,'0')+'</div><div><div class="qm-meta"><span class="qm-tag">'+esc(groups[q.group])+' · '+esc(q.topic)+'</span><span class="qm-tag phase">'+q.phase+'</span><span class="qm-tag priority">'+q.priority+' · '+q.minutes+'분</span></div><h4>'+esc(q.text)+'</h4><div class="qm-details"><div><strong>질문 의도</strong><p>'+esc(q.intent)+'</p></div><div><strong>기대 결과</strong><p>'+esc(q.result)+'</p></div><div><strong>확인 증거</strong><p>'+esc(q.evidence)+'</p></div></div></div><button class="qm-add" data-qm-toggle="'+q.id+'">'+(on?'선택됨 ✓':'계획에 추가')+'</button></article>';}
+  function planItems(){var list=selected();return list.length?list.map(function(q,i){return'<li><span>'+String(i+1).padStart(2,'0')+'</span><div><strong>'+esc(q.text)+'</strong><small>'+esc(q.target)+' · '+q.minutes+'분 · '+esc(q.topic)+'</small></div><button class="qm-remove" data-qm-remove="'+q.id+'" aria-label="질문 제거">×</button></li>';}).join(''):'<li class="qm-plan-empty">질문을 선택하면 인터뷰 순서와 예상 시간이 자동으로 편성됩니다.</li>';}
+  function render(){var main=document.querySelector('.workspace main');if(!main)return;var list=visible(),chosen=selected(),minutes=chosen.reduce(function(n,q){return n+q.minutes;},0),groupOpts='<option value="all">전체 설계체계</option>'+Object.keys(groups).map(function(k){return'<option value="'+k+'"'+(filter.group===k?' selected':'')+'>'+groups[k]+'</option>';}).join('');main.outerHTML='<main class="page qm-page"><section class="qm-hero"><div><small class="qm-eyebrow">FIRENAVI × K-FDE QUESTION SYSTEM</small><h2>현장 이해에서 실행지식까지 묻는 질문 플래너</h2><p>두 설계 자료의 3단 통합체계를 FDE 인터뷰 질문으로 전환했습니다. 질문마다 의도·기대 결과·확인 증거를 확인하고 현재 프로젝트의 인터뷰 실행계획표(런시트)에 바로 편성하세요.</p></div><div class="qm-actions"><button class="qm-btn" data-qm-action="clear">선택 초기화</button><button class="qm-btn orange" data-qm-action="recommended">필수 질문 자동 편성</button></div></section><section class="qm-map"><article><b>1</b><div><strong>플랫폼 생태계 설계 8요소</strong><span>참여자·문제·객체·데이터·관계·규칙·행동·가치로 현장을 이해합니다.</span><small>WHY &amp; WHO · Phase1</small></div></article><article><b>2</b><div><strong>플랫폼 원시요소 8개</strong><span>온톨로지·객체·권한·워크플로·출처·액션·KPI·확장을 표준화합니다.</span><small>WHAT &amp; HOW · Phase2</small></div></article><article><b>3</b><div><strong>온톨로지 7요소</strong><span>객체·속성·관계·상태·이벤트·규칙·행동을 AI 실행지식으로 연결합니다.</span><small>AI KNOWLEDGE · Phase2–3</small></div></article></section><section class="qm-toolbar"><label>⌕ <input type="search" data-qm-filter="search" value="'+esc(filter.search)+'" placeholder="질문·의도·증거 검색"></label><select data-qm-filter="group">'+groupOpts+'</select><select data-qm-filter="target">'+opts(Array.from(new Set(questions.map(function(q){return q.target;}))),filter.target,'전체 인터뷰 대상')+'</select><select data-qm-filter="phase">'+opts(['Phase1','Phase2','Phase3'],filter.phase,'전체 단계')+'</select></section><div class="qm-layout"><section class="qm-library"><header class="qm-head"><div><h3>질문 라이브러리</h3><p>자료 기반 29개 질문 · 조건에 맞는 질문을 선택하세요.</p></div><span class="qm-count">'+list.length+'개 표시</span></header><div class="qm-list">'+(list.length?list.map(card).join(''):'<div class="qm-empty">검색 조건에 맞는 질문이 없습니다.</div>')+'</div></section><aside class="qm-plan"><header class="qm-head"><div><h3>인터뷰 실행계획표(런시트)</h3><p>'+esc(state.id)+' 프로젝트에 자동 저장</p></div><span class="qm-count">'+chosen.length+'문항</span></header><div class="qm-form"><label>인터뷰 대상자<input data-qm-plan="interviewee" value="'+esc(state.plan.interviewee)+'" placeholder="예: 안전관리자 김OO"></label><label>실행 일시<input type="datetime-local" data-qm-plan="date" value="'+esc(state.plan.date)+'"></label><label>방식<select data-qm-plan="mode"><option'+(state.plan.mode==='현장 대면'?' selected':'')+'>현장 대면</option><option'+(state.plan.mode==='화상 인터뷰'?' selected':'')+'>화상 인터뷰</option><option'+(state.plan.mode==='전화 인터뷰'?' selected':'')+'>전화 인터뷰</option></select></label></div><ol class="qm-plan-list">'+planItems()+'</ol><footer class="qm-summary"><div><b>'+minutes+'분</b><span>질문별 확인 증거 포함</span></div><button class="qm-btn" data-qm-action="print">실행계획표 인쇄</button><button class="qm-btn primary" data-qm-action="start">인터뷰 시작 →</button></footer></aside></div></main>';bind();}
+  function bind(){document.querySelectorAll('[data-qm-filter]').forEach(function(el){el.addEventListener(el.tagName==='INPUT'?'input':'change',function(){filter[el.dataset.qmFilter]=el.value;render();});});document.querySelectorAll('[data-qm-plan]').forEach(function(el){el.addEventListener('change',function(){state.plan[el.dataset.qmPlan]=el.value;save();});});}
+  function toggle(id){var i=state.plan.selected.indexOf(id);if(i>-1)state.plan.selected.splice(i,1);else state.plan.selected.push(id);save();render();}
+  function notice(msg){var t=document.querySelector('.toast');if(t){t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2400);}else alert(msg);}
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-qm-toggle]');if(b){toggle(b.dataset.qmToggle);return;}b=e.target.closest('[data-qm-remove]');if(b){toggle(b.dataset.qmRemove);return;}b=e.target.closest('[data-qm-action]');if(!b)return;var a=b.dataset.qmAction;if(a==='recommended'){state.plan.selected=questions.filter(function(q){return q.priority==='필수';}).map(function(q){return q.id;});save();render();notice('필수 질문을 실행계획표에 편성했습니다.');}else if(a==='clear'){state.plan.selected=[];save();render();notice('선택한 질문을 초기화했습니다.');}else if(a==='print')window.print();else if(a==='start'){if(!state.plan.selected.length){notice('먼저 인터뷰 질문을 선택하세요.');return;}state.plan.startedAt=new Date().toISOString();save();notice('인터뷰 실행계획표를 시작했습니다. 질문별 확인 증거를 함께 기록하세요.');}});
+  render();
+})();
+
+// 실행 단계와 참조 프레임을 분리해 질문의 목적을 명확히 표시합니다.
+document.addEventListener('DOMContentLoaded', function () {
+  setTimeout(function () {
+    var map = document.querySelector('.qm-map');
+    if (!map) return;
+    map.innerHTML = [
+      '<div class="qm-map-title"><strong>실행 프로세스 · Phase 1–3</strong><span>질문은 Phase 1에서 수집하고 Phase 2·3의 설계 입력으로 전달합니다.</span></div>',
+      '<article><b>1</b><div><strong>FDE 발견</strong><span>고객 문제·현장 상황·이해관계자·업무 흐름·자료와 증거를 파악합니다.</span><small>질문 목적 · 사실·가설·요청 수집</small></div></article>',
+      '<article><b>2</b><div><strong>현장의 이해</strong><span>인터뷰와 증거를 바탕으로 객체·속성·관계·상태·이벤트·규칙·행동을 구조화합니다.</span><small>질문 결과 → 온톨로지 7요소</small></div></article>',
+      '<article><b>3</b><div><strong>AX 실행 아키텍처 설계</strong><span>AI 판단·Agent·워크플로·화면·데이터 모델의 운영 조건을 설계합니다.</span><small>질문 결과 → 실행 아키텍처</small></div></article>',
+      '<div class="qm-reference"><strong>참조 설계 프레임</strong><span>플랫폼 생태계 설계 8요소 · 플랫폼 원시요소 8개 · 온톨로지 7요소</span><small>참조 프레임은 Phase 1–3의 질문을 설계하고 결과를 구조화할 때 사용합니다.</small></div>'
+    ].join('');
+  }, 0);
+});

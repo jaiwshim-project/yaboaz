@@ -1,0 +1,1 @@
+(function(){document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){var s=document.querySelector('.topbar small'),h=document.querySelector('.topbar h1');if(s)s.textContent='04. '+s.textContent.replace(/^\\d+\\.\\s*/,'').replace(/문제발견·인터뷰 설계/,'이해관계자·현장 탐색');if(h)h.textContent='04 이해관계자·현장 탐색';},80);});})();

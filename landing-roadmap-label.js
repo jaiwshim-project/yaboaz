@@ -1,0 +1,1 @@
+(function(){function add(){var h=document.querySelector('.stage-roadmap h2');if(!h||h.querySelector('.roadmap-legal'))return;var s=document.createElement('small');s.className='roadmap-legal';s.textContent='(저작권 등록 및 특허 출원)';h.appendChild(s);}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(add,30);});else add();})();

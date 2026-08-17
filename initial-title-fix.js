@@ -1,0 +1,1 @@
+(function(){document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){var s=document.querySelector('.topbar small'),h=document.querySelector('.topbar h1');if(s)s.textContent='02. '+s.textContent.replace(/^\\d+\\.\\s*/,'');if(h)h.textContent='02 초기자료 정규화';},80);});})();

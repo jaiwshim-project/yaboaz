@@ -1,0 +1,1 @@
+(function(){document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){var s=document.querySelector('.topbar small'),h=document.querySelector('.topbar h1');if(s)s.textContent='03. '+s.textContent.replace(/^\\d+\\.\\s*/,'');if(h)h.textContent='03 2A4 문제해결 스튜디오';},80);});})();

@@ -15,14 +15,14 @@ async function render() {
   );
 }
 
-test("server-renders the K-FDE mission control", async () => {
+test("server-renders the K-FDE projects page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
-  assert.match(html, /K-FDE/);
-  assert.match(html, /미션 컨트롤/);
-  assert.match(html, /표준 실행 흐름/);
+  assert.match(html, /프로젝트/);
+  assert.match(html, /FireNavi/);
+  assert.match(html, /현장 프로젝트/);
   assert.doesNotMatch(html, /Your site is taking shape|codex-preview/);
 });
 

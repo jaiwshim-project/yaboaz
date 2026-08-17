@@ -1,0 +1,5 @@
+(function(){'use strict';
+  if(!document.body||document.body.dataset.page!=='initial-materials')return;
+  function mount(){var box=document.querySelector('.materials-ai');if(!box||box.dataset.refreshReady)return;var b=box.querySelector('[data-material-refresh]'),out=box.querySelector('[data-material-ai]');if(!b||!out)return;box.dataset.refreshReady='1';b.disabled=false;b.setAttribute('aria-label','AI 참고 분석 다시 분석');b.addEventListener('click',function(){var d={};try{d=JSON.parse(localStorage.getItem('k-fde-initial-materials-v1')||'{}')}catch(e){}var count=(d.files||[]).length;b.textContent='분석 중…';b.disabled=true;setTimeout(function(){out.innerHTML='최신 저장 자료 '+count+'건과 입력 메모를 다시 분석했습니다.<br><br>추천 분류: 사실·관찰 / 고객 요청 / 가설 / 데이터 출처 / 확인 필요 항목<br><br>FDE 확인: 최신성·작성자·근거 수준·보안 제한·2A4 문제 문장 연결';b.textContent='다시 분석';b.disabled=false;var s=document.querySelector('[data-material-status]');if(s)s.textContent='AI 분석 갱신 완료'},180)})}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(mount,260)});else setTimeout(mount,260);
+})();

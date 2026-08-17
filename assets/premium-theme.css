@@ -1,0 +1,136 @@
+﻿/* YABOAZ K-FDE Premium Theme */
+:root{--fde-navy:#0b1e31;--fde-navy-2:#12344b;--fde-teal:#167f92;--fde-mint:#48c4c0;--fde-gold:#d49a54;--fde-line:#d9e4e2;--fde-text:#13263d;--fde-muted:#607487}
+html{background:#eef4f3}body{background:radial-gradient(circle at 85% 0%,rgba(72,196,192,.1),transparent 28rem),linear-gradient(135deg,#f7faf8,#edf3f2)!important;color:var(--fde-text)!important}
+.sidebar{background:linear-gradient(180deg,#0b1e31,#12344b 58%,#0e2639)!important;box-shadow:10px 0 30px rgba(11,30,49,.12)}
+.brand-mark{border-color:var(--fde-mint)!important;box-shadow:0 0 0 2px #0b1e31,0 7px 18px rgba(0,0,0,.28)!important}.brand small{color:#91babd!important}
+.project-switcher{border-color:rgba(255,255,255,.11)!important}.project-dot,.secure i{background:var(--fde-mint)!important;box-shadow:0 0 11px var(--fde-mint)!important}
+.nav-link{color:#9ab3bb!important;border-radius:10px!important}.nav-link:hover{background:rgba(72,196,192,.13)!important;color:#f4fffe!important}.nav-link.active{background:linear-gradient(90deg,rgba(72,196,192,.19),rgba(72,196,192,.04))!important;box-shadow:inset 3px 0 var(--fde-mint)!important;color:#fff!important}.nav-link.active i{color:var(--fde-mint)!important}
+.topbar{background:rgba(247,250,248,.9)!important;border-bottom-color:rgba(19,38,61,.1)!important;box-shadow:0 4px 18px rgba(24,57,72,.04)}.topbar small{color:var(--fde-teal)!important}.topbar h1,.page-heading h2{color:var(--fde-navy)!important}
+.primary,.workspace .primary{background:linear-gradient(135deg,#168b98,#116473)!important;border-color:transparent!important;color:#fff!important;box-shadow:0 8px 18px rgba(17,100,115,.2)!important}
+.page{max-width:1580px!important}.page-heading>div>small,.section-title small{color:var(--fde-teal)!important}.page-heading p,.section-title>span{color:var(--fde-muted)!important}
+.mission,.kpi-hero,.run-sheet{background:linear-gradient(120deg,#0b1e31,#123e54 60%,#14596a)!important;box-shadow:0 18px 38px rgba(11,30,49,.18)!important}.mission:before{background:radial-gradient(circle at 82% 48%,rgba(72,196,192,.26),transparent 38%)!important}
+.stage-panel,.panel,.white,.project-card,.evidence-list,.kpi-grid article,.primitive-grid article,.approval-list>article,.ontology-studio{border-color:var(--fde-line)!important;box-shadow:0 10px 26px rgba(24,57,72,.06)!important}
+.stage-panel,.panel{background:linear-gradient(180deg,#fff,#f7fbf9)!important}.project-card,.evidence-list,.kpi-grid article,.primitive-grid article,.approval-list>article{background:#fff!important}
+.project-card:hover,.approval-list>article:hover,.primitive-grid article:hover,.kpi-grid article:hover{border-color:#b9deda!important;box-shadow:0 14px 28px rgba(24,97,105,.12)!important;transform:translateY(-3px)}
+.stage.current span{background:var(--fde-teal)!important;box-shadow:0 0 0 4px rgba(72,196,192,.18)!important}.stage.done span{background:#dff3ef!important;border-color:#bce4df!important;color:#167f92!important}
+.active-gate{background:linear-gradient(135deg,#f0faf8,#fff)!important;border:1px solid #d6ebe7}.active-gate button,.filters button.active,.modal footer button:last-child{background:linear-gradient(135deg,#168b98,#116473)!important;color:#fff!important;border:0!important}
+.metric,.project-card,.evidence-list,.kpi-grid article,.primitive-grid article,.approval-list>article{border-radius:14px!important}.metric strong,.kpi-grid article>b{color:var(--fde-navy)!important}.metric em,.question span,.panel-link,.project-card footer button,.primitive-grid article>button{color:var(--fde-teal)!important}
+.filters button,.filters label,.suggestion footer button,.approval-list footer button,.tools button{border-color:var(--fde-line)!important;background:#fff!important;color:var(--fde-muted)!important}
+.ontology-studio{background:#fff!important}.graph{background:#f8fbfa!important}.graph-grid{background-image:linear-gradient(#d8e8e555 1px,transparent 1px),linear-gradient(90deg,#d8e8e555 1px,transparent 1px)!important}.node.selected{border-color:var(--fde-teal)!important;box-shadow:0 0 0 3px rgba(72,196,192,.22)!important}
+.modal-backdrop{background:rgba(11,30,49,.76)!important}.modal{box-shadow:0 28px 90px rgba(11,30,49,.32)!important}
+@media(max-width:760px){.sidebar{background:linear-gradient(135deg,#0b1e31,#123e54)!important}.topbar{box-shadow:0 5px 18px rgba(24,57,72,.08)}}
+/* Shared readable type scale for menu pages */
+.workspace .page p,.workspace .page li,.workspace .page td,.workspace .page label{font-size:14px!important;line-height:1.6!important}
+.workspace .page h2{font-size:30px!important;line-height:1.25!important}
+.workspace .page h3{font-size:18px!important;line-height:1.35!important}
+.workspace .page h4{font-size:15px!important;line-height:1.45!important}
+.workspace .page small,.workspace .page time,.workspace .page .label,.workspace .page .eyebrow{font-size:12px!important;line-height:1.4!important}
+.workspace .page button,.workspace .page a.button,.workspace .page .btn,.workspace .page input,.workspace .page select,.workspace .page textarea{font-size:13px!important;line-height:1.4!important}
+.workspace .page .metric strong,.workspace .page .kpi-grid article>b{font-size:28px!important}
+.workspace .page .metric em,.workspace .page .metric>span,.workspace .page .metric p{font-size:12px!important}
+.workspace .page .card,.workspace .page .panel,.workspace .page .project-card p,.workspace .page .suggestion p,.workspace .page .timeline small,.workspace .page .risk p{font-size:14px!important}
+.sidebar .nav-link{font-size:12px!important}.sidebar .nav-link i{font-size:15px!important}.sidebar .nav-link small,.sidebar .stage-copy small,.sidebar .phase-caption{font-size:10px!important}
+.topbar h1{font-size:20px!important}.topbar small{font-size:11px!important}
+@media(max-width:760px){.workspace .page h2{font-size:25px!important}.workspace .page h3{font-size:17px!important}.workspace .page p,.workspace .page li,.workspace .page td,.workspace .page label{font-size:14px!important}}
+
+/* Sidebar contrast fix */
+.sidebar .nav-link span,.sidebar .nav-link strong{color:#dbe5f1!important}
+.sidebar .nav-link small{color:#9ab4c2!important}
+.sidebar .nav-link.active span,.sidebar .nav-link.active strong{color:#ffffff!important}
+.sidebar .nav-link.active small{color:#d9fbf5!important}
+.stage-nav .nav-section-title,.stage-nav .nav-section-title b{color:#b8cbd3!important}
+.stage-nav .phase-caption{color:#f4bf72!important}
+.stage-nav .nav-link .stage-copy strong{color:#eaf6fb!important}
+.stage-nav .nav-link .stage-copy small{color:#9ab4c2!important}
+.stage-nav .nav-link.active .stage-copy strong{color:#ffffff!important}
+.stage-nav .nav-link.active .stage-copy small{color:#d9fbf5!important}
+.stage-nav .nav-link.current-stage .stage-copy small{color:#f4c76b!important}
+.sidebar .k-fde-readable-text{color:#eaf6fb!important}
+.stage-nav .nav-link.active .k-fde-readable-text{color:#ffffff!important}
+
+/* Unified typography system for all menu page bodies */
+.workspace,.workspace *{font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif!important}
+.workspace h1,.workspace h2,.workspace h3,.workspace h4,.workspace h5,.workspace h6{font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif!important;letter-spacing:-.025em!important}
+.workspace h1{font-size:24px!important;line-height:1.3!important;font-weight:800!important}
+.workspace h2{font-size:30px!important;line-height:1.3!important;font-weight:800!important}
+.workspace h3{font-size:19px!important;line-height:1.4!important;font-weight:750!important}
+.workspace h4,.workspace h5,.workspace h6{font-size:16px!important;line-height:1.45!important;font-weight:700!important}
+.workspace p,.workspace li,.workspace td,.workspace th,.workspace label,.workspace input,.workspace select,.workspace textarea{font-size:14px!important;line-height:1.65!important}
+.workspace small,.workspace time,.workspace .label,.workspace .eyebrow,.workspace [class*="caption"]{font-size:12px!important;line-height:1.45!important;letter-spacing:.01em!important}
+.workspace button,.workspace a,.workspace .btn,.workspace .primary{font-size:13px!important;line-height:1.45!important;font-weight:700!important}
+.workspace .metric strong,.workspace .kpi-grid article>b{font-size:28px!important;line-height:1.1!important;font-weight:800!important}
+.workspace .mission h2,.workspace .kpi-hero h2,.workspace .architecture-hero h2,.workspace .cases-hero h2,.workspace .analysis-hero h2,.workspace .twoa4-hero h2{font-size:32px!important;line-height:1.35!important;font-weight:800!important}
+.workspace .mission p,.workspace .kpi-hero p,.workspace .architecture-hero p,.workspace .cases-hero p,.workspace .analysis-hero p,.workspace .twoa4-hero p{font-size:14px!important;line-height:1.7!important}
+.workspace .nav-link,.workspace .stage-copy strong,.workspace .stage-copy small{font-family:"Noto Sans KR","Malgun Gothic",Arial,sans-serif!important}
+@media(max-width:760px){.workspace h1{font-size:20px!important}.workspace h2{font-size:25px!important}.workspace h3{font-size:18px!important}.workspace p,.workspace li,.workspace td,.workspace th,.workspace label{font-size:14px!important}.workspace .mission h2,.workspace .architecture-hero h2,.workspace .cases-hero h2,.workspace .analysis-hero h2,.workspace .twoa4-hero h2{font-size:27px!important}}
+
+
+/* WCAG AA contrast correction for gold text */
+:root{--fde-gold:#8f5a20}
+.workspace .gold,.workspace .accent-gold{color:#8f5a20!important}
+
+/* Discovery analysis readability overrides */
+.workspace .analysis-score span,.workspace .direction-card footer,.workspace .lens-card small,.workspace .method-card small,.workspace .process-step p,.workspace .hypothesis small,.workspace .interview-question div small,.workspace .coverage-list span{font-size:12px!important;line-height:1.55!important}
+.workspace .analysis-summary b{font-size:24px!important;line-height:1.2!important}
+.workspace .direction-card h4,.workspace .lens-card h4,.workspace .method-card h4,.workspace .interview-category h4{font-size:16px!important}
+.workspace .question-tools button,.workspace .question-tools input,.workspace .interview-question button,.workspace .plan-actions button,.workspace .plan-actions a{font-size:13px!important}
+
+/* Discovery brief contrast correction */
+.workspace .analysis-hero{color:#ffffff!important;background:linear-gradient(135deg,#0b2638,#12556a)!important}
+.workspace .analysis-hero small{color:#a7eee8!important;font-size:12px!important;font-weight:800!important}
+.workspace .analysis-hero h2{color:#ffffff!important;font-size:32px!important;font-weight:800!important}
+.workspace .analysis-hero p{color:#e3f3f4!important;font-size:14px!important;line-height:1.7!important}
+.workspace .analysis-score b{color:#8ce8cf!important}
+.workspace .analysis-score span{color:#e5f5f4!important;font-size:12px!important;line-height:1.5!important}
+
+.page-workbench{margin-top:16px}.page-workbench form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.page-workbench label{display:block;color:#30475a;font-size:13px}.page-workbench label span{display:block;font-weight:700;margin-bottom:5px}.page-workbench input{width:100%;box-sizing:border-box;border:1px solid #dbe3ea;border-radius:8px;padding:10px;background:#fbfdff}.page-workbench button{grid-column:1;padding:10px 14px;border:0;border-radius:8px;cursor:pointer}.workbench-status{align-self:center;color:#218675;font-size:12px}@media(max-width:700px){.page-workbench form{grid-template-columns:1fr}.page-workbench button{grid-column:1}}
+.page-checklist{margin-top:16px}.check-items{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}.check-items label{display:flex;align-items:center;gap:9px;padding:12px;border:1px solid #e2e9ee;border-radius:9px;color:#30475a;font-size:13px;background:#fbfdff}.check-items input{accent-color:#198f80;width:17px;height:17px}.check-status{color:#218675;font-size:12px}@media(max-width:700px){.check-items{grid-template-columns:1fr}}
+.interview-question .question-purpose,.interview-question .question-outcome{font-size:12px;line-height:1.55;color:#5d7180;margin:5px 0}.interview-question .question-purpose strong,.interview-question .question-outcome strong{color:#168e80;margin-right:4px}.plan-list li small{display:block;color:#718096;line-height:1.55;margin-top:4px}.plan-list li small em{font-style:normal;color:#168e80;font-weight:700}
+.interview-question{position:relative}.interview-question .customer-answer{grid-column:2;width:100%;box-sizing:border-box;min-height:88px;margin-top:8px;border:1px solid #b9cec3;border-radius:8px;padding:10px;font:inherit;line-height:1.5;resize:vertical}.interview-question .customer-answer:focus{outline:2px solid #b7e8dc;border-color:#168e80}.interview-question.selected{padding-bottom:12px}@media(max-width:700px){.interview-question .customer-answer{grid-column:1}}
+.interview-question .answer-actions{grid-column:2;display:flex;align-items:center;gap:8px;margin-top:4px}.answer-actions button{position:static!important;transform:none!important;border:1px solid #168e80!important;background:#effaf7!important;color:#116f67!important;border-radius:7px!important;padding:7px 11px!important;font-size:12px!important}.answer-actions em{font-size:11px;color:#168e80;font-style:normal}@media(max-width:700px){.interview-question .answer-actions{grid-column:1}}
+.stage-collaboration{margin-top:18px;padding:0;overflow:hidden;border:1px solid #dbe6e4}.collab-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:20px 22px;background:linear-gradient(135deg,#102b3d,#145c68);color:#fff}.collab-head small{color:#a9eee3;font-weight:800;letter-spacing:.12em}.collab-head h3{margin:6px 0;font-size:20px}.collab-head p{margin:0;color:#d7eff0;font-size:13px}.collab-badge{background:#ffffff1c;border:1px solid #ffffff35;color:#d9fff6;border-radius:99px;padding:7px 10px;font-size:11px;white-space:nowrap}.collab-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:16px}.collab-grid article{border:1px solid #dbe6e4;border-radius:10px;padding:15px;background:#fbfdfd}.collab-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.collab-label span{font-weight:800;color:#12374a}.collab-label b{color:#168e80;font-size:12px}.collab-label button{border:1px solid #c7d8d7;background:#fff;border-radius:7px;padding:6px 9px;color:#176f72;cursor:pointer}.ai-draft{background:#f1fbfa!important}.ai-draft p{font-size:14px;line-height:1.7;color:#2c4a55;min-height:130px;margin:0 0 9px}.collab-grid article>small{font-size:11px;color:#718096;line-height:1.5}.fde-input textarea{width:100%;min-height:150px;box-sizing:border-box;border:1px solid #cbdcda;border-radius:8px;padding:10px;font:inherit;line-height:1.6;resize:vertical;margin-bottom:9px}.fde-input textarea:focus{outline:2px solid #b7e8dc;border-color:#168e80}.fde-input button{border:0;border-radius:8px;padding:10px 13px;cursor:pointer}.collab-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 20px;background:#f5f9f8;color:#667b84;font-size:12px}.collab-footer a{color:#137c76;font-weight:800;text-decoration:none}@media(max-width:760px){.collab-head{display:block}.collab-badge{display:inline-block;margin-top:10px}.collab-grid{grid-template-columns:1fr}.collab-footer{display:block}.collab-footer a{display:block;margin-top:7px}}
+.fde-add-button{background:#fff7ee!important;color:#a34e13!important;border-color:#e2a16f!important;font-weight:800}.fde-question{border-color:#e2a16f!important;background:#fffaf5!important}.remove-fde-question{position:absolute!important;right:12px!important;bottom:10px!important;top:auto!important;transform:none!important;border:0!important;background:transparent!important;color:#a34e13!important;font-size:11px!important}.question-modal-backdrop{position:fixed;inset:0;background:#07182799;display:grid;place-items:center;z-index:50;padding:16px}.question-modal{width:min(580px,100%);background:#fff;border-radius:14px;padding:20px;box-shadow:0 20px 70px #0004}.question-modal header,.question-modal footer{display:flex;justify-content:space-between;align-items:center;gap:10px}.question-modal header button{border:0;background:none;font-size:24px}.question-modal label{display:block;margin:13px 0;font-size:13px;color:#30475a;font-weight:700}.question-modal textarea,.question-modal select{display:block;width:100%;box-sizing:border-box;border:1px solid #dbe3ea;border-radius:8px;padding:10px;margin-top:6px;font:inherit}.question-modal textarea{min-height:70px}.question-modal footer{justify-content:flex-end}.question-modal footer button{border:1px solid #dbe3ea;background:#fff;border-radius:8px;padding:9px 12px}.question-modal footer .primary{background:#f19a4a;color:#fff;border-color:#f19a4a}
+
+.fde-add-button-side{width:100%;margin:12px 0 4px;text-align:center}
+
+
+/* Questions: keep the utilization sheet visible while the question bank scrolls */
+.question-layout .plan-panel{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;z-index:4}
+@media(max-width:850px){.question-layout .plan-panel{position:static;max-height:none;overflow:visible}}
+
+
+.question-layout .plan-panel-heading{position:sticky;top:-1px;background:#fff;padding:2px 0 10px;margin:-2px 0 0;z-index:6;border-bottom:1px solid #edf1f4}
+.question-layout .plan-panel-heading h3{margin-top:4px}
+
+
+/* Stable page-level sticky behavior: the sheet header must not disappear into an inner scroll box */
+.question-layout .plan-panel{position:sticky;top:106px;max-height:none;overflow:visible}
+.question-layout .plan-panel-heading{position:sticky;top:106px}
+@media(max-width:850px){.question-layout .plan-panel{position:static;max-height:none;overflow:visible}.question-layout .plan-panel-heading{position:static}}
+
+
+/* Ontology element color coding in the utilization sheet */
+.plan-item-meta{display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:54px}.plan-ontology-badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-size:10px!important;font-weight:800;line-height:1.2;color:#fff;background:#64748b;white-space:nowrap}.plan-ontology-badge[data-element='객체']{background:#168b98}.plan-ontology-badge[data-element='속성']{background:#5478ef}.plan-ontology-badge[data-element='관계']{background:#8b5cf6}.plan-ontology-badge[data-element='상태']{background:#16825f}.plan-ontology-badge[data-element='이벤트']{background:#ec7258}.plan-ontology-badge[data-element='행동']{background:#d97706}.plan-ontology-badge[data-element='규칙']{background:#c2417a}.plan-list li>div:last-child{min-width:0}.plan-list li>div:last-child strong{display:block}
+
+
+/* Strong, distinct backgrounds for all seven ontology elements */
+.plan-ontology-badge{box-shadow:0 3px 8px rgba(16,39,33,.16);border:1px solid rgba(255,255,255,.45);letter-spacing:-.02em}
+.plan-ontology-badge[data-element='객체']{background-color:#087f8c!important}.plan-ontology-badge[data-element='속성']{background-color:#3f63d8!important}.plan-ontology-badge[data-element='관계']{background-color:#7346c6!important}.plan-ontology-badge[data-element='상태']{background-color:#08734f!important}.plan-ontology-badge[data-element='이벤트']{background-color:#d9573f!important}.plan-ontology-badge[data-element='행동']{background-color:#b96005!important}.plan-ontology-badge[data-element='규칙']{background-color:#ae2f67!important}
+
+
+/* Ontology seven-element filter colors */
+.question-tools button[data-category='전체']{background:#12334a!important;color:#fff!important;border-color:#12334a!important}.question-tools button[data-category='객체']{background:#d8f3f2!important;color:#075d66!important;border-color:#78c9ca!important}.question-tools button[data-category='속성']{background:#e1e9ff!important;color:#2e4fa8!important;border-color:#9eb3f5!important}.question-tools button[data-category='관계']{background:#eee4ff!important;color:#6336a8!important;border-color:#c7a9f4!important}.question-tools button[data-category='상태']{background:#ddf4e8!important;color:#086342!important;border-color:#8dd3ad!important}.question-tools button[data-category='이벤트']{background:#ffe5df!important;color:#a43d2c!important;border-color:#f2a090!important}.question-tools button[data-category='규칙']{background:#ffe1ef!important;color:#9b2f5e!important;border-color:#e99abd!important}.question-tools button[data-category='행동']{background:#fff0d8!important;color:#955006!important;border-color:#e8b66b!important}.question-tools button[data-category]:hover,.question-tools button[data-category].active{filter:saturate(1.18);box-shadow:0 4px 12px rgba(16,39,33,.14);transform:translateY(-1px)}
+
+
+/* Color-code every question title by ontology element */
+.interview-question[data-element] h3{font-weight:800!important}.interview-question[data-element='객체'] h3{color:#087f8c!important}.interview-question[data-element='속성'] h3{color:#3f63d8!important}.interview-question[data-element='관계'] h3{color:#7346c6!important}.interview-question[data-element='상태'] h3{color:#08734f!important}.interview-question[data-element='이벤트'] h3{color:#d9573f!important}.interview-question[data-element='행동'] h3{color:#b96005!important}.interview-question[data-element='규칙'] h3{color:#ae2f67!important}
+
+
+/* Element badges on every question card */
+.question-element-badge{display:inline-block;border-radius:999px;padding:3px 7px;color:#fff!important;font-size:11px!important;font-weight:800;line-height:1.2;box-shadow:0 2px 6px rgba(16,39,33,.14);border:1px solid rgba(255,255,255,.45)}.question-element-badge[data-element='객체']{background:#087f8c!important}.question-element-badge[data-element='속성']{background:#3f63d8!important}.question-element-badge[data-element='관계']{background:#7346c6!important}.question-element-badge[data-element='상태']{background:#08734f!important}.question-element-badge[data-element='이벤트']{background:#d9573f!important}.question-element-badge[data-element='행동']{background:#b96005!important}.question-element-badge[data-element='규칙']{background:#ae2f67!important}
+
+
+/* Seven-element color treatment for the utilization sheet header */
+.question-layout .plan-panel-heading{margin:-18px -18px 12px;padding:14px 18px 13px;background:linear-gradient(105deg,#087f8c 0%,#3f63d8 16%,#7346c6 32%,#08734f 48%,#d9573f 65%,#b96005 82%,#ae2f67 100%)!important;border:0;border-radius:12px 12px 8px 8px;box-shadow:0 7px 18px rgba(16,39,33,.16);color:#fff}.question-layout .plan-panel-heading small{color:#dffefd!important;font-weight:900!important;letter-spacing:.12em}.question-layout .plan-panel-heading h3{color:#fff!important;margin-top:5px;text-shadow:0 1px 2px rgba(0,0,0,.2)} 
+@media(max-width:850px){.question-layout .plan-panel-heading{margin:-18px -18px 12px}}
+

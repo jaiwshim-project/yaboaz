@@ -38,3 +38,9 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+/test-results/
+*.tsbuildinfo
+*특허*.pdf
+*특허*.docx
+기획서_반영현황.md
+로컬_실행_안내.txt
