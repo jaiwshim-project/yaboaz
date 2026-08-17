@@ -1,7 +1,1 @@
-﻿{
-  "version": 2,
-  "framework": null,
-  "buildCommand": "npm run build:static",
-  "outputDirectory": "vercel-static",
-  "cleanUrls": false
-}
+{"version":2,"framework":null,"buildCommand":"npm run build:static","outputDirectory":"vercel-static","cleanUrls":false}
