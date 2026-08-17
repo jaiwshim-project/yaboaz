@@ -54,3 +54,28 @@
   document.addEventListener("click",e=>{const b=e.target.closest("[data-toggle-group]");if(!b)return;const s=b.closest(".nav-section");s.classList.toggle("collapsed");});
 })();
 
+
+/* Mobile hamburger menu */
+document.addEventListener("DOMContentLoaded",function(){
+  var topbar=document.querySelector(".topbar");
+  var sidebar=document.querySelector(".sidebar");
+  if(!topbar||!sidebar||document.querySelector(".mobile-menu-toggle"))return;
+  var actions=topbar.querySelector(".top-actions")||topbar;
+  var button=document.createElement("button");
+  button.className="mobile-menu-toggle";
+  button.type="button";
+  button.setAttribute("aria-label","메뉴 열기");
+  button.setAttribute("aria-expanded","false");
+  button.textContent="☰";
+  actions.insertBefore(button,actions.firstChild);
+  var backdrop=document.createElement("div");
+  backdrop.className="mobile-menu-backdrop";
+  backdrop.setAttribute("aria-hidden","true");
+  document.body.appendChild(backdrop);
+  function close(){document.body.classList.remove("menu-open");button.setAttribute("aria-expanded","false");button.setAttribute("aria-label","메뉴 열기");button.textContent="☰";}
+  function open(){document.body.classList.add("menu-open");button.setAttribute("aria-expanded","true");button.setAttribute("aria-label","메뉴 닫기");button.textContent="×";}
+  button.addEventListener("click",function(){document.body.classList.contains("menu-open")?close():open();});
+  backdrop.addEventListener("click",close);
+  sidebar.addEventListener("click",function(e){if(e.target.closest("a"))close();});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});
+});
