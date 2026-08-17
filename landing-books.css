@@ -10,3 +10,8 @@
 .book-card{border-color:#b7dfe6;background:linear-gradient(145deg,#fff,#f7fcfd);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.book-card:hover{transform:translateY(-6px);border-color:#55bfd4;box-shadow:0 16px 30px rgba(16,77,99,.16)}.book-card:hover .book-cover img{transform:scale(1.025)}.book-cover img{transition:transform .25s ease}
 .book-grid{grid-template-columns:repeat(3,1fr)}@media(max-width:800px){.book-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.book-grid{grid-template-columns:1fr}}
 .book-grid{grid-template-columns:repeat(5,1fr)}@media(max-width:1000px){.book-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:700px){.book-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.book-grid{grid-template-columns:1fr}}
+
+/* Archive cards: readable metadata and descriptions on light cards. */
+.book-library header p,.book-card p{color:#294957}
+.book-card h3{color:#17313d}
+.book-cover small{opacity:1;text-shadow:0 1px 3px rgba(0,0,0,.75)}

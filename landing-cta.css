@@ -1,1 +1,6 @@
 .landing-cta{margin:58px 0 0;padding:42px 46px;border-radius:20px;background:linear-gradient(120deg,#10253d,#147fa4 62%,#2aa6b5);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px;box-shadow:0 20px 45px rgba(16,37,61,.2)}.landing-cta h2{margin:0 0 9px;font-size:30px;letter-spacing:-.04em}.landing-cta p{margin:0;color:#d6f1f4;line-height:1.6}.landing-cta-actions{display:flex;gap:10px;flex-wrap:wrap}.landing-cta-actions a{display:inline-block;padding:13px 18px;border-radius:9px;text-decoration:none;font-weight:800;background:#d97724;color:#fff}.landing-cta-actions a.secondary{background:#fff;color:#147fa4}@media(max-width:700px){.landing-cta{display:block;padding:30px 24px}.landing-cta-actions{margin-top:20px}}
+
+/* CTA readability: stronger hierarchy on the dark gradient surface. */
+.landing-cta h2{color:#fff!important;font-size:clamp(26px,3vw,34px);font-weight:800;line-height:1.3;letter-spacing:-.03em;text-shadow:0 1px 2px rgba(0,0,0,.22)}
+.landing-cta p{color:#f0fbfc!important;font-size:16px;line-height:1.8;font-weight:500}
+.landing-cta-actions a{font-size:14px;line-height:1.4}

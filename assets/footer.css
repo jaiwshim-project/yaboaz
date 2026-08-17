@@ -3,3 +3,19 @@
 .footer-status{display:none!important}
 .footer-main{grid-template-columns:1.2fr 1.5fr}
 .footer-legal{color:#f59e0b}.footer-legal strong{color:#ffb347}
+
+/* Footer contrast: increase small copy and navigation legibility. */
+.premium-footer{color:#e8f5ef}
+.footer-lockup small,.footer-identity>p,.footer-nav a,.footer-legal,.footer-bottom{color:#c5ddd2}
+.footer-principles span{color:#b9f0d9}
+.footer-nav b,.footer-status>small{color:#9bd8bd}
+.footer-nav a{font-size:12px}
+.footer-identity>p{font-size:12px}
+.footer-legal{font-size:12px}
+.footer-bottom{font-size:10px}
+
+/* Footer brand lockup readability */
+.footer-lockup{gap:14px}
+.footer-lockup>span{width:46px;height:46px}
+.footer-lockup strong{color:#f2fff9!important;font-size:18px!important;font-weight:850!important;letter-spacing:-.02em}
+.footer-lockup small{color:#b9ead5!important;font-size:10px!important;font-weight:750!important;letter-spacing:.16em!important;line-height:1.4}
