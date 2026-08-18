@@ -23,10 +23,10 @@ ${text}`;
   const result = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: { "content-type": "application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01" },
-    body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1200, temperature: 0, messages: [{ role: "user", content: prompt }] })
+    body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 1200, temperature: 0, messages: [{ role: "user", content: prompt }] })
   });
   if (!result.ok) return response.status(502).json({ error: "Claude API 호출에 실패했습니다." });
   const json = await result.json();
   const summary = (json.content || []).filter((part) => part.type === "text").map((part) => part.text || "").join("\n").trim();
-  return response.status(200).json({ summary, filename, model: "claude-sonnet-4-20250514" });
+  return response.status(200).json({ summary, filename, model: "claude-sonnet-4-6" });
 }

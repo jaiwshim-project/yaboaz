@@ -47,7 +47,7 @@ ${text}`;
       "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 1200,
       temperature: 0,
       messages: [{ role: "user", content: prompt }],
@@ -61,5 +61,5 @@ ${text}`;
 
   const result = await response.json() as { content?: Array<{ type?: string; text?: string }> };
   const summary = (result.content || []).filter((part) => part.type === "text").map((part) => part.text || "").join("\n").trim();
-  return Response.json({ summary, filename, model: "claude-sonnet-4-20250514" });
+  return Response.json({ summary, filename, model: "claude-sonnet-4-6" });
 }

@@ -32,3 +32,6 @@
 @media(max-width:700px){.landing-nav{align-items:flex-start;gap:12px}.landing-nav-actions{justify-content:flex-end;padding-top:48px;width:100%}.landing-nav-actions .language-switch{top:10px}.landing-nav-actions a:last-child{margin-left:auto}}
 
 .landing-nav-actions .language-switch{z-index:1000;pointer-events:auto;cursor:pointer}
+
+.en-final-cta a[data-auth-gate]{background:#d97724!important;color:#fff!important;border:0;box-shadow:0 8px 18px rgba(217,119,36,.22)}.en-final-cta a[data-auth-gate]:hover{background:#b96019!important;color:#fff!important}
+
