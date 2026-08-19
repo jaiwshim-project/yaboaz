@@ -162,7 +162,7 @@
     var button = document.createElement('button');
     button.type = 'button';
     button.className = 'learning-completion-button';
-    button.textContent = '학습 완료';
+    button.textContent = '학습완료 후 클릭!';
     button.dataset.completeKey = material.materialKey;
     button.setAttribute('aria-pressed', 'false');
     button.addEventListener('click', function () {
