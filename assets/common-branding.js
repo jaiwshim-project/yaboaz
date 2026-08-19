@@ -53,13 +53,6 @@
   }
 
   var landing = document.querySelector('.landing');
-  if (!landing && !document.querySelector('.yaboz-common-header')) {
-    var header = document.createElement('header');
-    header.className = 'yaboz-common-header';
-    header.innerHTML = '<a class="yaboz-lockup" href="/index-ko.html"><img src="/assets/kfde-symbol.jpg" alt="YABOAZ K-FDE symbol"><span><strong>YABOAZ K-FDE Platform</strong><small>FDE FIELD OPERATING SYSTEM</small></span></a><a class="yaboz-home-link" href="/index-ko.html">공개 홈페이지</a>';
-    document.body.insertBefore(header, document.body.firstChild);
-  }
-
   if (landing) {
     var brand = landing.querySelector('.landing-brand');
     if (brand && !brand.querySelector('img')) {
