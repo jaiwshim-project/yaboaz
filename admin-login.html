@@ -7,4 +7,4 @@
 <script>
 document.querySelector('form').addEventListener('submit',async function(event){event.preventDefault();var message=document.querySelector('.message');var response=await fetch('/api/admin-login.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:document.querySelector('input').value})});var data=await response.json();if(!data.ok){message.textContent=data.message||'인증에 실패했습니다.';return;}location.href='/13step-Roadmap.html';});
 </script>
-</body></html>
+<script defer src="/assets/common-branding.js"></script></body></html>
