@@ -102,13 +102,29 @@
     });
   }
 
+  function renderMaterials(rows) {
+    var box = document.getElementById('lms-material-detail');
+    if (!box) return;
+    if (!rows || !rows.length) {
+      box.innerHTML = '<p class="message">아직 학습자료 학습 이력이 없습니다.</p>';
+      return;
+    }
+    box.innerHTML = rows.map(function (material) {
+      var status = material.status === 'completed' ? '완료' : (material.status === 'in_progress' ? '학습 중' : (material.status === 'viewed' ? '열람' : '미학습'));
+      return '<article class="material-progress"><div><strong>' + escapeHtml(material.title) + '</strong><small> · ' + escapeHtml(material.material_type) + ' · ' + escapeHtml(status) + '</small><div><i style="width:' + Number(material.progress_percent || 0) + '%"></i></div><small>최근 학습: ' + escapeHtml(material.last_viewed_at ? String(material.last_viewed_at).slice(0, 19).replace('T', ' ') : '없음') + '</small></div><strong>' + Number(material.progress_percent || 0) + '%</strong>' + (material.notes ? '<p>' + escapeHtml(material.notes) + '</p>' : '') + '</article>';
+    }).join('');
+  }
   function loadDetail(userId) {
     if (!userId) return;
     selectedUserId = userId;
     showMessage('회원 LMS를 불러오는 중입니다.', false);
-    callRpc('yaboaz_lms_admin_member_detail', { p_password: password(), p_user_id: userId })
-      .then(renderDetail)
-      .catch(function (error) { showMessage(error.message, true); });
+    Promise.all([
+      callRpc('yaboaz_lms_admin_member_detail', { p_password: password(), p_user_id: userId }),
+      callRpc('yaboaz_lms_admin_materials', { p_password: password(), p_user_id: userId })
+    ]).then(function (results) {
+      renderDetail(results[0]);
+      renderMaterials(results[1]);
+    }).catch(function (error) { showMessage(error.message, true); });
   }
 
   function loadMembers() {
