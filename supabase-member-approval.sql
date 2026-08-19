@@ -139,3 +139,30 @@ begin
   return deleted_count > 0;
 end;
 $$;
+
+-- Membership type migration: paid members and free testing members.
+alter table public.yaboaz_member_profiles
+  add column if not exists membership_type text not null default 'paid'
+  check (membership_type in ('paid', 'testing'));
+
+alter table public.yaboaz_access_codes
+  add column if not exists membership_type text not null default 'paid'
+  check (membership_type in ('paid', 'testing'));
+
+create or replace function public.yaboaz_claim_access_code(p_code text, p_user_id uuid)
+returns boolean language plpgsql security definer set search_path = public, extensions
+as $$
+declare claimed_type text;
+begin
+  if auth.uid() is null or auth.uid() <> p_user_id then return false; end if;
+  update public.yaboaz_access_codes
+  set status = 'assigned', assigned_user_id = p_user_id, assigned_at = now()
+  where status = 'available' and code_hash = digest(upper(trim(p_code)), 'sha256')
+  returning membership_type into claimed_type;
+  if not found then return false; end if;
+  update public.yaboaz_member_profiles
+  set membership_type = coalesce(claimed_type, 'paid'), updated_at = now()
+  where user_id = p_user_id;
+  return true;
+end;
+$$;
