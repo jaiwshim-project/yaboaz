@@ -61,6 +61,18 @@
     }
   }
 
+  var navSymbolCss = document.createElement('style');
+  navSymbolCss.textContent = '.yaboz-nav-brand{display:flex;align-items:center;gap:10px}.yaboz-nav-symbol{width:36px;height:36px;flex:0 0 36px;border:2px solid #b9dfe5;border-radius:10px;object-fit:cover;box-shadow:0 4px 12px rgba(16,77,99,.12)}';
+  document.head.appendChild(navSymbolCss);
+  document.querySelectorAll('nav.nav .brand').forEach(function (brand) {
+    if (brand.querySelector('.yaboz-nav-symbol')) return;
+    var symbol = document.createElement('img');
+    symbol.className = 'yaboz-nav-symbol';
+    symbol.src = '/assets/kfde-symbol.jpg';
+    symbol.alt = 'YABOAZ K-FDE symbol';
+    brand.insertBefore(symbol, brand.firstChild);
+    brand.classList.add('yaboz-nav-brand');
+  });
   var oldFooter = document.querySelector('.premium-footer');
   if (oldFooter) oldFooter.remove();
   var footer = document.querySelector('.landing-footer') || document.querySelector('.yaboz-common-footer');
