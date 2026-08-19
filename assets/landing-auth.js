@@ -2,7 +2,8 @@
   'use strict';
   var SUPABASE_URL='https://sqfuqnxlafcilsookmqm.supabase.co';
   var SUPABASE_KEY='sb_publishable_e_l8tN6U0r6DEiiidSus4A_FdCugrVR';
-  var DEST='https://yaboaz.com/mission-management.html';\n  var pendingDestination=DEST;
+  var DEST='https://yaboaz.com/mission-management.html';
+  var pendingDestination=DEST;
   var AUTH_REDIRECT='https://yaboaz.com/index.html';
   function api(path,options){options=options||{};options.headers=Object.assign({'Content-Type':'application/json','apikey':SUPABASE_KEY},options.headers||{});return fetch(SUPABASE_URL+path,options).then(function(r){return r.json().then(function(data){if(!r.ok)throw new Error(data.error_description||data.msg||data.message||'Authentication failed');return data;});},true);}
   function dataApi(path,token,options){options=options||{};options.headers=Object.assign({'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+token},options.headers||{});return fetch(SUPABASE_URL+'/rest/v1/'+path,options).then(function(r){return r.json().then(function(data){if(!r.ok)throw new Error(data.message||data.hint||'회원 승인 정보를 확인할 수 없습니다.');return data;});},true);}
@@ -10,6 +11,7 @@
   function accessCode(value){return String(value||'').trim().toUpperCase();}
   function saveSession(result){try{sessionStorage.setItem('kfde-auth-session',JSON.stringify(result));}catch(e){}}
   function hasSession(){try{var session=JSON.parse(sessionStorage.getItem('kfde-auth-session')||'null');return !!(session&&session.access_token&&session.user);}catch(e){return false;}}
+  function hasAdminSession(){return fetch('/api/admin-session.js',{credentials:'same-origin'}).then(function(response){return response.json();}).then(function(data){return !!(data&&data.authenticated);}).catch(function(){return false;});}
   function profile(result,data){if(data&&data.signup){return dataApi('yaboaz_member_profiles?on_conflict=user_id',result.access_token,{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=representation'},body:JSON.stringify({user_id:result.user.id,email:data.email,full_name:data.name,company_name:data.company,phone:data.phone,status:'pending'})});}return dataApi('yaboaz_member_profiles?select=status&user_id=eq.'+encodeURIComponent(result.user.id)+'&limit=1',result.access_token,{});}
   function openModal(){
     if(document.querySelector('.auth-backdrop'))return;
@@ -50,7 +52,7 @@
         });
       }).catch(function(err){message.className='auth-message error';message.textContent=err.message;submit.disabled=false;});
     }
-  }  document.addEventListener('click',function(e){var trigger=e.target.closest('[data-auth-gate]');if(!trigger||trigger.classList.contains('language-switch'))return;e.preventDefault();e.stopImmediatePropagation();e.stopPropagation();if(hasSession()){window.location.href=trigger.getAttribute('href')||DEST;return;}pendingDestination=trigger.getAttribute('href')||DEST;openModal();},true);
+  }  document.addEventListener('click',function(e){var trigger=e.target.closest('[data-auth-gate]');if(!trigger||trigger.classList.contains('language-switch'))return;e.preventDefault();e.stopImmediatePropagation();e.stopPropagation();var destination=trigger.getAttribute('href')||DEST;if(hasSession()){window.location.href=destination;return;}hasAdminSession().then(function(isAdmin){if(isAdmin){window.location.href=destination;return;}pendingDestination=destination;openModal();});},true);
   if(new URLSearchParams(window.location.search).get('auth')==='login'){setTimeout(openModal,0);}
 })();
 
