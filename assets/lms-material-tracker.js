@@ -251,7 +251,21 @@
     var footer = document.querySelector('footer') || document.body.lastElementChild;
     var holder = document.createElement('div');
     holder.className = 'learning-completion-holder';
+    holder.style.display = 'flex';
+    holder.style.alignItems = 'center';
+    holder.style.justifyContent = 'center';
+    holder.style.gap = '18px';
+    holder.style.flexWrap = 'wrap';
     addCompletionButton(holder, material);
+    var previous = document.createElement('button');
+    previous.type = 'button';
+    previous.className = 'page-back-button page-back-inline';
+    previous.textContent = '이전 페이지 이동!';
+    previous.addEventListener('click', function () {
+      if (window.history.length > 1) window.history.back();
+      else window.location.href = '13step-Roadmap.html';
+    });
+    holder.appendChild(previous);
     if (footer && footer.parentNode) footer.parentNode.insertBefore(holder, footer);
     else document.body.appendChild(holder);
     track(material);
