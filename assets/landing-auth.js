@@ -1,8 +1,8 @@
-﻿(function(){
+(function(){
   'use strict';
   var SUPABASE_URL='https://sqfuqnxlafcilsookmqm.supabase.co';
   var SUPABASE_KEY='sb_publishable_e_l8tN6U0r6DEiiidSus4A_FdCugrVR';
-  var DEST='https://yaboaz.com/mission-management.html';
+  var DEST='https://yaboaz.com/mission-management.html';\n  var pendingDestination=DEST;
   var AUTH_REDIRECT='https://yaboaz.com/index.html';
   function api(path,options){options=options||{};options.headers=Object.assign({'Content-Type':'application/json','apikey':SUPABASE_KEY},options.headers||{});return fetch(SUPABASE_URL+path,options).then(function(r){return r.json().then(function(data){if(!r.ok)throw new Error(data.error_description||data.msg||data.message||'Authentication failed');return data;});},true);}
   function dataApi(path,token,options){options=options||{};options.headers=Object.assign({'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+token},options.headers||{});return fetch(SUPABASE_URL+'/rest/v1/'+path,options).then(function(r){return r.json().then(function(data){if(!r.ok)throw new Error(data.message||data.hint||'회원 승인 정보를 확인할 수 없습니다.');return data;});},true);}
@@ -46,11 +46,11 @@
         return profile(result,{signup:mode==='signup',email:email,name:String(data.get('name')||'').trim(),company:String(data.get('company')||'').trim(),phone:String(data.get('phone')||'').trim()}).then(function(rows){
           var item=rows[0];
           if(mode==='signup'){message.className='auth-message success';message.textContent='가입이 완료되었습니다. 로그인하세요.';submit.disabled=false;return;}
-          window.location.href=DEST;
+          window.location.href=pendingDestination;
         });
       }).catch(function(err){message.className='auth-message error';message.textContent=err.message;submit.disabled=false;});
     }
-  }  document.addEventListener('click',function(e){var trigger=e.target.closest('[data-auth-gate]');if(!trigger||trigger.classList.contains('language-switch'))return;e.preventDefault();e.stopImmediatePropagation();e.stopPropagation();if(hasSession()){window.location.href=trigger.getAttribute('href')||DEST;return;}openModal();},true);
+  }  document.addEventListener('click',function(e){var trigger=e.target.closest('[data-auth-gate]');if(!trigger||trigger.classList.contains('language-switch'))return;e.preventDefault();e.stopImmediatePropagation();e.stopPropagation();if(hasSession()){window.location.href=trigger.getAttribute('href')||DEST;return;}pendingDestination=trigger.getAttribute('href')||DEST;openModal();},true);
   if(new URLSearchParams(window.location.search).get('auth')==='login'){setTimeout(openModal,0);}
 })();
 

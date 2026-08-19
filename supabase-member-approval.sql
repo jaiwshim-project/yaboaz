@@ -63,3 +63,79 @@ for update to authenticated using (public.yaboaz_is_admin()) with check (public.
 -- insert into public.yaboaz_admin_users (user_id)
 -- select id from auth.users where email = 'jaiwshim@gmail.com'
 -- on conflict do nothing;
+
+-- Access codes are provisioned as hashes only. Never insert the plaintext code.
+create extension if not exists pgcrypto;
+
+create table if not exists public.yaboaz_access_codes (
+  id uuid primary key default gen_random_uuid(),
+  code_hash bytea not null unique,
+  status text not null default 'available' check (status in ('available', 'assigned', 'revoked')),
+  assigned_user_id uuid references auth.users(id) on delete set null,
+  assigned_at timestamptz,
+  created_at timestamptz not null default now(),
+  constraint yaboaz_access_codes_assignment_consistency check (
+    (status = 'assigned' and assigned_user_id is not null and assigned_at is not null)
+    or (status <> 'assigned' and assigned_user_id is null and assigned_at is null)
+  )
+);
+
+alter table public.yaboaz_access_codes enable row level security;
+
+create or replace function public.yaboaz_access_code_available(p_code text)
+returns boolean language sql stable security definer set search_path = public, extensions
+as $$
+  select exists (select 1 from public.yaboaz_access_codes where status = 'available' and code_hash = digest(upper(trim(p_code)), 'sha256'));
+$$;
+
+create or replace function public.yaboaz_claim_access_code(p_code text, p_user_id uuid)
+returns boolean language plpgsql security definer set search_path = public, extensions
+as $$
+begin
+  if auth.uid() is null or auth.uid() <> p_user_id then return false; end if;
+  update public.yaboaz_access_codes
+  set status = 'assigned', assigned_user_id = p_user_id, assigned_at = now()
+  where status = 'available' and code_hash = digest(upper(trim(p_code)), 'sha256');
+  return found;
+end;
+$$;
+
+revoke all on function public.yaboaz_access_code_available(text) from public;
+grant execute on function public.yaboaz_access_code_available(text) to anon, authenticated;
+revoke all on function public.yaboaz_claim_access_code(text, uuid) from public;
+grant execute on function public.yaboaz_claim_access_code(text, uuid) to authenticated;
+
+drop policy if exists "yaboaz member self update" on public.yaboaz_member_profiles;
+create policy "yaboaz member self update" on public.yaboaz_member_profiles
+for update to authenticated
+using (user_id = auth.uid() and status = 'pending')
+with check (user_id = auth.uid() and status = 'pending');
+
+create or replace function public.yaboaz_dashboard_delete_member(p_password text, p_user_id uuid)
+returns boolean language plpgsql security definer set search_path = public, extensions
+as $$
+declare deleted_count integer;
+begin
+  if not exists (select 1 from public.yaboaz_dashboard_access where id = true and password_hash = digest(trim(p_password), 'sha256')) then return false; end if;
+  delete from auth.users where id = p_user_id;
+  get diagnostics deleted_count = row_count;
+  return deleted_count > 0;
+end;
+$$;
+revoke all on function public.yaboaz_dashboard_delete_member(text, uuid) from public;
+grant execute on function public.yaboaz_dashboard_delete_member(text, uuid) to anon, authenticated;
+
+create or replace function public.yaboaz_dashboard_delete_member(p_password text, p_user_id uuid)
+returns boolean language plpgsql security definer set search_path = public, extensions
+as $$
+declare deleted_count integer;
+begin
+  if not exists (select 1 from public.yaboaz_dashboard_access where id = true and password_hash = digest(trim(p_password), 'sha256')) then return false; end if;
+  update public.yaboaz_access_codes
+  set status = 'available', assigned_user_id = null, assigned_at = null
+  where assigned_user_id = p_user_id;
+  delete from auth.users where id = p_user_id;
+  get diagnostics deleted_count = row_count;
+  return deleted_count > 0;
+end;
+$$;
