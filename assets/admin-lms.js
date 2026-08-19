@@ -13,11 +13,7 @@
   function callRpc(name, body) {
     return fetch(SUPABASE_URL + '/rest/v1/rpc/' + name, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_KEY,
-        Authorization: 'Bearer ' + SUPABASE_KEY
-      },
+      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY },
       body: JSON.stringify(body)
     }).then(function (response) {
       return response.json().then(function (data) {
@@ -35,8 +31,14 @@
 
   function showMessage(text, isError) {
     var element = document.getElementById('lms-admin-message');
-    if (element) element.textContent = text;
-    if (element) element.className = 'message' + (isError ? ' error' : ' success');
+    if (element) {
+      element.textContent = text;
+      element.className = 'message' + (isError ? ' error' : ' success');
+    }
+  }
+
+  function requestedMemberId() {
+    return new URLSearchParams(window.location.search).get('member') || '';
   }
 
   function renderMembers() {
@@ -48,8 +50,10 @@
     }
     list.innerHTML = members.map(function (member) {
       var statusLabels = { pending: '대기', approved: '정상', rejected: '거절', blocked: '차단' };
-      return '<tr><td><button class="member-link" data-member="' + escapeHtml(member.user_id) + '">' +
-        escapeHtml(member.full_name || member.email) + '</button><small class="member-email">' +
+      var memberUrl = 'admin-lms.html?member=' + encodeURIComponent(member.user_id);
+      return '<tr><td><a class="member-link" data-member="' + escapeHtml(member.user_id) + '" href="' +
+        memberUrl + '" title="' + escapeHtml(member.full_name || member.email) + ' LMS 열기">' +
+        escapeHtml(member.full_name || member.email) + '</a><small class="member-email">' +
         escapeHtml(member.email) + '</small></td><td>' + escapeHtml(statusLabels[member.status] || member.status) +
         '</td><td><div>' + Number(member.progress || 0) + '%</div><div class="progress-line"><i style="width:' +
         Number(member.progress || 0) + '%"></i></div></td><td>' + escapeHtml(member.last_activity ?
@@ -61,7 +65,7 @@
     var member = members.find(function (item) { return item.user_id === selectedUserId; });
     var title = document.getElementById('lms-detail-title');
     var box = document.getElementById('lms-detail');
-    if (title) title.textContent = member ? (member.full_name || member.email) + ' · 학습 상세' : '학습 상세';
+    if (title) title.textContent = member ? (member.full_name || member.email) + ' · 회원 LMS' : '회원 LMS 상세';
     if (!box) return;
     box.innerHTML = (rows || []).map(function (record) {
       var status = record.status || 'not_started';
@@ -85,27 +89,23 @@
         var feedbackElement = box.querySelector('[data-review-feedback="' + stageNo + '"]');
         button.disabled = true;
         callRpc('yaboaz_lms_admin_review_member_stage', {
-          p_password: password(),
-          p_user_id: selectedUserId,
-          p_stage_no: stageNo,
-          p_status: statusElement.value,
-          p_feedback: feedbackElement.value
+          p_password: password(), p_user_id: selectedUserId, p_stage_no: stageNo,
+          p_status: statusElement.value, p_feedback: feedbackElement.value
         }).then(function (result) {
           if (result !== true) throw new Error('검토 결과 저장에 실패했습니다.');
           showMessage('단계 ' + stageNo + ' 검토 결과를 저장했습니다.', false);
           return callRpc('yaboaz_lms_admin_member_detail', { p_password: password(), p_user_id: selectedUserId });
         }).then(renderDetail).catch(function (error) {
           showMessage(error.message, true);
-        }).finally(function () {
-          button.disabled = false;
-        });
+        }).finally(function () { button.disabled = false; });
       });
     });
   }
 
   function loadDetail(userId) {
+    if (!userId) return;
     selectedUserId = userId;
-    showMessage('회원 학습 상세를 불러오는 중입니다.', false);
+    showMessage('회원 LMS를 불러오는 중입니다.', false);
     callRpc('yaboaz_lms_admin_member_detail', { p_password: password(), p_user_id: userId })
       .then(renderDetail)
       .catch(function (error) { showMessage(error.message, true); });
@@ -118,14 +118,14 @@
       .then(function (rows) {
         members = rows || [];
         renderMembers();
-        showMessage('회원 LMS 현황을 불러왔습니다.', false);
+        var memberId = requestedMemberId();
+        if (memberId) loadDetail(memberId);
+        else showMessage('회원 LMS 현황을 불러왔습니다.', false);
       })
       .catch(function (error) { showMessage(error.message, true); });
   }
 
   document.addEventListener('click', function (event) {
-    var memberButton = event.target.closest('[data-member]');
-    if (memberButton) loadDetail(memberButton.dataset.member);
     if (event.target.closest('#admin-refresh')) loadMembers();
   });
   window.addEventListener('admin-authenticated', loadMembers);
