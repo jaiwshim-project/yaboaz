@@ -259,6 +259,9 @@
   function init() {
     session = getSession();
     if (!session || !session.access_token) {
+      injectPanel();
+      var hiddenPanel = document.getElementById('learning-record-panel');
+      if (hiddenPanel) hiddenPanel.style.display = 'none';
       if (document.querySelector('.material-tabs')) buildReferenceCompletionButtons();
       else initHtml();
       return;
