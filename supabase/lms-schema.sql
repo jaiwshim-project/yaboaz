@@ -380,3 +380,56 @@ $$;
 
 grant execute on function public.yaboaz_lms_admin_materials(text,uuid) to anon, authenticated;
 
+
+create or replace function public.lms_track_material(
+  p_material_key text,
+  p_title text,
+  p_material_type text,
+  p_source_url text,
+  p_status text default 'viewed',
+  p_progress_percent integer default 0,
+  p_last_position text default '',
+  p_notes text default '',
+  p_metadata jsonb default '{}'::jsonb
+)
+returns public.lms_material_progress
+language plpgsql security definer set search_path = public
+as $$
+declare material public.lms_materials; saved public.lms_material_progress;
+begin
+  if auth.uid() is null then raise exception 'authentication required'; end if;
+  if p_material_type not in ('html','slide','video','pdf','other') then raise exception 'invalid material type'; end if;
+  if p_status not in ('viewed','in_progress','completed') then raise exception 'invalid material status'; end if;
+  insert into public.lms_materials(material_key,title,material_type,source_url,metadata)
+  values(p_material_key,coalesce(nullif(p_title,''),p_material_key),p_material_type,p_source_url,coalesce(p_metadata,'{}'::jsonb))
+  on conflict(material_key) do update set title=excluded.title,material_type=excluded.material_type,source_url=excluded.source_url,metadata=excluded.metadata,updated_at=now()
+  returning * into material;
+  insert into public.lms_material_progress(user_id,material_id,status,progress_percent,last_position,notes,completed_at)
+  values(auth.uid(),material.id,p_status,greatest(0,least(100,coalesce(p_progress_percent,0))),coalesce(p_last_position,''),coalesce(p_notes,''),case when p_status='completed' then now() else null end)
+  on conflict(user_id,material_id) do update set
+    status=case when public.lms_material_progress.status='completed' then 'completed' else excluded.status end,
+    progress_percent=greatest(public.lms_material_progress.progress_percent,excluded.progress_percent),
+    last_position=case when excluded.last_position='' then public.lms_material_progress.last_position else excluded.last_position end,
+    notes=case when excluded.notes='' then public.lms_material_progress.notes else excluded.notes end,
+    last_viewed_at=now(),
+    completed_at=case when public.lms_material_progress.status='completed' or excluded.status='completed' then coalesce(public.lms_material_progress.completed_at,now()) else null end,
+    updated_at=now()
+  returning * into saved;
+  insert into public.lms_activity_events(user_id,event_type,metadata) values(auth.uid(),'material_'+p_status,jsonb_build_object('material_key',p_material_key,'material_type',p_material_type,'progress_percent',p_progress_percent,'last_position',p_last_position));
+  return saved;
+end;
+$$;
+
+create or replace function public.lms_get_my_material_progress(p_material_key text default null)
+returns table(material_key text,status text,progress_percent integer,last_position text,notes text,completed_at timestamptz)
+language sql security definer set search_path = public
+as $$
+  select m.material_key,coalesce(p.status,'not_started'),coalesce(p.progress_percent,0),coalesce(p.last_position,''),coalesce(p.notes,''),p.completed_at
+  from public.lms_materials m
+  left join public.lms_material_progress p on p.material_id=m.id and p.user_id=auth.uid()
+  where auth.uid() is not null and (p_material_key is null or m.material_key=p_material_key)
+  order by m.material_key;
+$$;
+
+grant execute on function public.lms_get_my_material_progress(text) to authenticated;
+
