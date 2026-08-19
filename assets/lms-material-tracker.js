@@ -111,6 +111,10 @@
 
   function complete(material) {
     if (!material) return;
+    if (!session || !session.access_token) {
+      window.location.href = '/index-ko.html?auth=login';
+      return;
+    }
     var panel = document.getElementById('learning-record-panel');
     var notes = panel ? panel.querySelector('[data-learning-notes]').value : '';
     return saveMaterial(material, 'completed', 100, notes).then(function () {
@@ -254,7 +258,11 @@
 
   function init() {
     session = getSession();
-    if (!session || !session.access_token) return;
+    if (!session || !session.access_token) {
+      if (document.querySelector('.material-tabs')) buildReferenceCompletionButtons();
+      else initHtml();
+      return;
+    }
     injectPanel();
     if (document.querySelector('.material-tabs')) initReference();
     else initHtml();
