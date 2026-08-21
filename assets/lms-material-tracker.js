@@ -195,12 +195,41 @@
     return track(referenceMaterial(key, position));
   }
 
+  function buildReferenceVideoCompletionButtons() {
+    document.querySelectorAll('.reference-video-card').forEach(function (card) {
+      var videoId = card.dataset.videoId;
+      var button = card.querySelector('.reference-video-complete');
+      if (!videoId || !button) return;
+      var material = {
+        materialKey: 'video:reference-materials:' + videoId,
+        title: (card.querySelector('h3') || {}).textContent || '학습 영상',
+        type: 'video',
+        source: sourceUrl() + '#video-' + videoId,
+        position: 'completed'
+      };
+      button.dataset.completeKey = material.materialKey;
+      if (button.dataset.lmsBound === 'true') return;
+      button.dataset.lmsBound = 'true';
+      button.addEventListener('click', function () {
+        button.disabled = true;
+        complete(material).finally(function () { button.disabled = false; });
+      });
+      rpc('lms_get_my_material_progress', { p_material_key: material.materialKey }).then(function (rows) {
+        var row = rows && rows[0];
+        if (row && row.status === 'completed') {
+          button.hidden = false;
+          setCompleteVisual(material.materialKey, true);
+        }
+      });
+    });
+  }
   function buildReferenceCompletionButtons() {
     document.querySelectorAll('.material-group').forEach(function (section) {
       var key = section.id.replace(/-material$/, '');
       var lastSlide = section.querySelector('.slide:last-child');
       if (lastSlide) addCompletionButton(lastSlide, referenceMaterial(key, 'last'));
     });
+    buildReferenceVideoCompletionButtons()
     var videoCards = document.querySelectorAll('.video-card');
     if (videoCards.length) {
       var lastVideo = videoCards[videoCards.length - 1];
